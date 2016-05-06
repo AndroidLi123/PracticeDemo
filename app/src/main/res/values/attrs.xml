@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="firstColor" format="color" />
+    <attr name="secondColor" format="color" />
+    <attr name="circleWidth" format="dimension" />
+    <attr name="dotCount" format="integer" />
+    <attr name="splitSize" format="integer" />
+    <attr name="bg" format="reference"></attr>
+    <attr name="type" format="integer" />
+    <attr name="linelength" format="dimension"></attr>
+    <attr name="delay" format="integer"></attr>
+    <declare-styleable name="CustomVolumControlBar">
+        <attr name="firstColor" />
+        <attr name="secondColor" />
+        <attr name="circleWidth" />
+        <attr name="dotCount" />
+        <attr name="splitSize" />
+        <attr name="bg" />
+        <attr name="type"></attr>
+        <attr name="linelength"></attr>
+        <attr name="delay"></attr>
+    </declare-styleable>
+
+</resources>

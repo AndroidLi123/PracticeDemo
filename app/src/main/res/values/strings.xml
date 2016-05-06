@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Gank</string>
+    <string name="hot_zhihu">知乎热文</string>
+    <string name="zhihu_newspaper">知乎日报</string>
+    <string name="notify_priority">notify_priority</string>
+    <string name="title_activity_setting">设置</string>
+    <string name="xiaomi_attention">
+        <![CDATA[小米系统用户请进入系统应用:安全中心->授权管理->自启动应用管理 后允许『贝壳单词』自启动，否则无法自启动]]></string>
+    <string name="toast_close">当前为关闭。\n开启后会在你使用其他 APP
+        的时，定时弹出可爱的小『吐司』，不会妨碍你的触摸和点击事件，打扰性非常低，但却能很高效地无压力复习单词。
+    </string>
+    <string name="toast_open">当前为开启。\n开启后会在你使用其他 APP
+        的时，定时弹出可爱的小『吐司』，不会妨碍你的触摸和点击事件，打扰性非常低，但却能很高效地无压力复习单词。
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
