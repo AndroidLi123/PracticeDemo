@@ -2,8 +2,9 @@ package com.gank.data;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
+
+import io.realm.RealmList;
 
 /**
  * 今日热文
@@ -11,8 +12,9 @@ import java.util.List;
  * @author lsxiao
  * @date 2015-11-03 22:32
  */
-public class TodayNews implements Serializable {
+public class TodayNews {
     //日期,唯一,重复的直接覆盖
+
     @SerializedName("date")
     private String mDate;
 
@@ -24,28 +26,40 @@ public class TodayNews implements Serializable {
     @SerializedName("top_stories")
     private List<Story> mTopStories;
 
-    public String getDate() {
+    public String getmDate() {
         return mDate;
     }
 
-    public List<Story> getStories() {
+    public void setmDate(String mDate) {
+        this.mDate = mDate;
+    }
+
+    public List<Story> getmStories() {
         return mStories;
     }
 
-    public List<Story> getTopStories() {
+    public void setmStories(RealmList<Story> mStories) {
+        this.mStories = mStories;
+    }
+
+    public List<Story> getmTopStories() {
         return mTopStories;
     }
 
-    @Override
+    public void setmTopStories(RealmList<Story> mTopStories) {
+        this.mTopStories = mTopStories;
+    }
+
+    /*@Override
     public String toString() {
         return "TodayNews{" +
                 "mDate='" + mDate + '\'' +
                 ", mStories=" + mStories +
                 ", mTopStories=" + mTopStories +
                 '}';
-    }
+    }*/
 
-    public static class Story implements Serializable {
+    /*public static class Story implements Serializable {
         //id
         @SerializedName("id")
         private long mId;
@@ -114,6 +128,6 @@ public class TodayNews implements Serializable {
                     ", mMultiPic=" + mMultiPic +
                     '}';
         }
-    }
+    }*/
 
 }

@@ -18,6 +18,7 @@ public class TodayPresenterImp implements TodayPresenter {
     public TodayPresenterImp(TodayModel todayModel,TodayView todayView) {
         this.todayModel = todayModel;
         this.todayView = todayView;
+
     }
 
     @Override
@@ -37,7 +38,10 @@ public class TodayPresenterImp implements TodayPresenter {
 
             @Override
             public void onNext(TodayNews todayNews) {
-                Log.d("onnext",todayNews.getDate());
+                Log.d("onnext", todayNews.getmDate());
+                /*realm.beginTransaction();
+                TodayNews realmRepos = realm.copyToRealmOrUpdate(todayNews);
+                realm.commitTransaction();*/
                 todayView.setupDayGankDataToView(todayNews);
 
             }
