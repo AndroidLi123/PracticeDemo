@@ -48,4 +48,7 @@ public abstract class BaseListFragment extends Fragment {
         return parentView;
     }
 
+    public BaseListAdapter getAdapter() {
+        return adapter;
+    }
 }

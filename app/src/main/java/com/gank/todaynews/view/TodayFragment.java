@@ -1,12 +1,13 @@
 package com.gank.todaynews.view;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.ArrayMap;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.gank.base.BaseListAdapter;
-import com.gank.base.BaseListFragment;
+import com.gank.base.BaseTodayNewsListFramgent;
 import com.gank.data.Story;
 import com.gank.data.TodayNews;
 import com.gank.todaynews.adapter.TodayItemAdapter;
@@ -15,21 +16,19 @@ import com.gank.todaynews.model.TodayModelImp;
 import com.gank.todaynews.presenter.TodayPresenter;
 import com.gank.todaynews.presenter.TodayPresenterImp;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.realm.Realm;
-import io.realm.RealmAsyncTask;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 /**
  * Created by thinkpad on 2016/4/29.
  */
-public class TodayFragment extends BaseListFragment implements TodayView, TodayItemAdapter.onImgCollectClickListener {
+public class TodayFragment extends BaseTodayNewsListFramgent implements TodayView, TodayItemAdapter.onImgCollectClickListener {
     private TodayPresenter dayGankPresenter;
     private TodayModel dayGankModel;
-    private List<Story> dayGankDatas = new ArrayList<>();
     private Realm realm;
-    private RealmAsyncTask transaction;
+    private ArrayMap<Long, Boolean> mMap = new ArrayMap<>();
+    protected RealmResults<Story> results;
 
     public TodayFragment() {
     }
@@ -39,17 +38,40 @@ public class TodayFragment extends BaseListFragment implements TodayView, TodayI
         init();
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view =  super.onCreateView(inflater, container, savedInstanceState);
+        return view;
+    }
+
     protected void init() {
         dayGankModel = new TodayModelImp(getContext());
         dayGankPresenter = new TodayPresenterImp(dayGankModel, this);
         realm = Realm.getDefaultInstance();
+        RealmQuery<Story> query = realm.where(Story.class);
+        results = query.findAll();
+        if (results != null) {
+            for (int i = 0; i < results.size(); i++) {
+                mMap.put(results.get(i).getmId(), true);
+
+            }
+        }
+
     }
 
     @Override
-    protected BaseListAdapter onCreateAdapter() {
-        TodayItemAdapter todayItemAdapter = new TodayItemAdapter(dayGankDatas, getActivity(), realm);
-        todayItemAdapter.setListener(this);
-        return todayItemAdapter;
+    public void onResume() {
+        super.onResume();
+        mMap.clear();
+        RealmQuery<Story> query = realm.where(Story.class);
+        results = query.findAll();
+        if (results != null) {
+            for (int i = 0; i < results.size(); i++) {
+                mMap.put(results.get(i).getmId(), true);
+            }
+        }
+        todayItemAdapter.setmMap(mMap);
+
     }
 
     @Override
@@ -58,17 +80,11 @@ public class TodayFragment extends BaseListFragment implements TodayView, TodayI
 
     }
 
-    @Override
-    protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        return layoutManager;
-    }
-
 
     @Override
     public void setupDayGankDataToView(TodayNews dayGankData) {
         adapter.setmList(dayGankData.getmStories());
+
     }
 
     @Override
@@ -84,33 +100,38 @@ public class TodayFragment extends BaseListFragment implements TodayView, TodayI
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(realm!=null)
-        realm.close();
+        if (realm != null)
+            realm.close();
+    }
+
+    @Override
+    protected void setImgCollectListener(TodayItemAdapter adapter) {
+        adapter.setListener(this);
 
     }
 
     @Override
-    public void onImgClick(final Story dayGankData) {
-        Log.d("onimage","click");
-        realm.beginTransaction();
-        transaction = realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                if(realm!=null) {
-                    realm.copyToRealm(dayGankData);
+    public void onImgClick(Story dayGankData, boolean isChecked) {
+        if(isChecked) {
+            if (realm != null) {
+                realm.beginTransaction();
+                realm.copyToRealm(dayGankData);
+                realm.commitTransaction();
+
+            }
+
+        }else {
+            realm.beginTransaction();
+            RealmResults<Story> results = realm.where(Story.class).findAll();
+            for (int i = 0; i < results.size(); i++) {
+                if (results.get(i).getmId() == dayGankData.getmId()) {
+                    results.remove(i);
 
                 }
             }
-        }, null);
-        realm.commitTransaction();
-    }
+            realm.commitTransaction();
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (transaction != null && !transaction.isCancelled()) {
-            transaction.cancel();
         }
-    }
 
+    }
 }

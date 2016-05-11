@@ -24,6 +24,10 @@ public abstract class BaseListAdapter<M, VH extends RecyclerView.ViewHolder> ext
         notifyDataSetChanged();
     }
 
+    public List<M> getmList() {
+        return mList;
+    }
+
     public void addmList(List<M> addList) {
         mList.addAll(addList);
         notifyDataSetChanged();
