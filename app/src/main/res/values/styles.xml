@@ -10,4 +10,21 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="NightTheme" parent="AppTheme">
+        <item name="item_text_color">@color/colorAccent</item>
+
+    </style>
+
+    <style name="tabTextApperence" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/md_white_1000</item>
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabTextColor">@color/md_white_1000</item>
+        <item name="tabSelectedTextColor">@color/md_blue_600</item>
+        <item name="tabPaddingStart">6dp</item>
+        <item name="tabPaddingEnd">6dp</item>
+    </style>
 </resources>

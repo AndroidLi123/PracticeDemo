@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_grey_300"
+    android:tag="skin:main_background:background"
     tools:context="com.gank.MainActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -12,6 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:fitsSystemWindows="true"
+        android:tag="skin:toolbar_background:background"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <include layout="@layout/include_tool_bar" />
@@ -21,33 +24,21 @@
         android:id="@+id/vp_horizontal_ntb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/wrapper_ntb_horizontal"
+        android:layout_above="@+id/line"
         android:layout_below="@+id/appbar" />
 
-    <FrameLayout
-        android:id="@+id/wrapper_ntb_horizontal"
+    <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_height="1dp"
+        android:layout_above="@+id/tab"
+        android:background="@color/md_grey_400" />
 
-        <View
-            android:id="@+id/bg_ntb_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_gravity="bottom"
-            android:background="#605271" />
-
-        <com.gigamole.library.NavigationTabBar
-            android:id="@+id/ntb_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            app:ntb_badge_gravity="top"
-            app:ntb_badge_position="right"
-            app:ntb_badged="true"
-            app:ntb_scaled="true"
-            app:ntb_title_mode="all"
-            app:ntb_titled="true" />
-
-    </FrameLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab"
+        style="@style/MyCustomTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

@@ -19,9 +19,9 @@ public class BaseNewTaskFragmentPagerAdapter extends FragmentPagerAdapter {
 
     }
 
-    public void addFragment(Fragment fragment, String title) {
+    public void addFragment(Fragment fragment) {
         mFragments.add(fragment);
-        mFragmentTitles.add(title);
+
     }
 
     @Override
@@ -34,9 +34,6 @@ public class BaseNewTaskFragmentPagerAdapter extends FragmentPagerAdapter {
         return mFragments.size();
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return mFragmentTitles.get(position);
-    }
+
 }
 

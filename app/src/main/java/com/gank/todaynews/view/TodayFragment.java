@@ -3,19 +3,18 @@ package com.gank.todaynews.view;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.gank.base.BaseTodayNewsListFramgent;
 import com.gank.data.Story;
 import com.gank.data.TodayNews;
+import com.gank.setting.SwithModelEvent;
 import com.gank.todaynews.adapter.TodayItemAdapter;
 import com.gank.todaynews.model.TodayModel;
 import com.gank.todaynews.model.TodayModelImp;
 import com.gank.todaynews.presenter.TodayPresenter;
 import com.gank.todaynews.presenter.TodayPresenterImp;
 
+import de.greenrobot.event.EventBus;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -28,23 +27,27 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
     private TodayModel dayGankModel;
     private Realm realm;
     private ArrayMap<Long, Boolean> mMap = new ArrayMap<>();
-    protected RealmResults<Story> results;
 
+    protected RealmResults<Story> results;
     public TodayFragment() {
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("oncreate","oncreate");
         init();
     }
 
-    @Override
+    /*@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  super.onCreateView(inflater, container, savedInstanceState);
+        //recyclerView.setItemAnimator(ItemAnimatorFactory.slidein());
+
         return view;
     }
-
+*/
     protected void init() {
+        EventBus.getDefault().register(this);
         dayGankModel = new TodayModelImp(getContext());
         dayGankPresenter = new TodayPresenterImp(dayGankModel, this);
         realm = Realm.getDefaultInstance();
@@ -80,10 +83,9 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
 
     }
 
-
     @Override
     public void setupDayGankDataToView(TodayNews dayGankData) {
-        adapter.setmList(dayGankData.getmStories());
+        todayItemAdapter.setmList(dayGankData.getmStories());
 
     }
 
@@ -102,6 +104,7 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
         super.onDestroy();
         if (realm != null)
             realm.close();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -111,7 +114,8 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
     }
 
     @Override
-    public void onImgClick(Story dayGankData, boolean isChecked) {
+    public void onImgClick(Story dayGankData, boolean isChecked,ArrayMap<Long, Boolean> mMap) {
+        mMap.put(dayGankData.getmId(),isChecked);
         if(isChecked) {
             if (realm != null) {
                 realm.beginTransaction();
@@ -132,6 +136,15 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
             realm.commitTransaction();
 
         }
+
+    }
+
+    public void onEvent(SwithModelEvent event) {
+        getFragmentManager()
+                .beginTransaction()
+                .detach(this)
+                .attach(this)
+                .commit();
 
     }
 }

@@ -1,7 +1,6 @@
 package com.gank.base;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
@@ -10,13 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gank.R;
+import com.zhy.changeskin.SkinManager;
 
 /**
  * Created by thinkpad on 2016/4/29.
  */
-public abstract class BaseListFragment extends Fragment {
+public abstract class BaseListFragment extends BaseFragment {
     protected SwipeRefreshLayout refreshView;
     protected BaseListAdapter adapter;
+    protected RecyclerView recyclerView;
 
     protected abstract BaseListAdapter onCreateAdapter();
 
@@ -24,6 +25,9 @@ public abstract class BaseListFragment extends Fragment {
 
     protected abstract LayoutManager onCreateLayoutManager();
 
+    protected  void setItemAnimater(RecyclerView recyclerView) {
+
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +36,11 @@ public abstract class BaseListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parentView = inflater.inflate(R.layout.layout_common_list, container, false);
-        RecyclerView recyclerView = (RecyclerView) parentView.findViewById(R.id.recyclerView);
+        SkinManager.getInstance().injectSkin(parentView);
+        SkinManager.getInstance().apply(getActivity());
+        recyclerView = (RecyclerView) parentView.findViewById(R.id.recyclerView);
         refreshView = (SwipeRefreshLayout) parentView.findViewById(R.id.pull_to_refresh);
+        setItemAnimater(recyclerView);
         adapter = onCreateAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(onCreateLayoutManager());
@@ -47,6 +54,8 @@ public abstract class BaseListFragment extends Fragment {
         });
         return parentView;
     }
+
+
 
     public BaseListAdapter getAdapter() {
         return adapter;

@@ -45,7 +45,7 @@ public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent impl
     }
 
     @Override
-    public void onImgClick(Story dayGankData, boolean isChecked) {
+    public void onImgClick(Story dayGankData, boolean isChecked,ArrayMap<Long, Boolean> mMap) {
         if (!isChecked) {
             realm.beginTransaction();
             dayGankData.removeFromRealm();

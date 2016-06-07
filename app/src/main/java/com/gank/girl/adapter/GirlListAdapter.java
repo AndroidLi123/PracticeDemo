@@ -9,8 +9,10 @@ import android.widget.ImageView;
 
 import com.gank.R;
 import com.gank.base.BaseListAdapter;
-import com.gank.common.ImageLoader;
+import com.gank.common.ImageLoaderUtil;
+import com.gank.common.MyImageLoader;
 import com.gank.data.entitiy.Gank;
+import com.gank.widget.RatioImageView;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class GirlListAdapter extends BaseListAdapter<Gank, GirlListAdapter.ViewH
     public GirlListAdapter(List list, Context context) {
         super(list);
         this.context = context;
+        setHasStableIds(true);
 
     }
 
@@ -37,14 +40,24 @@ public class GirlListAdapter extends BaseListAdapter<Gank, GirlListAdapter.ViewH
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_girl, parent, false);
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+        view.setTag(holder);
+        return holder;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return mList.get(position).get_id().hashCode();
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Gank gank = getItem(position);
-        holder.itemView.setTag(gank.get_id());
-        ImageLoader.getInstance().LoadImageWithDiskCacheStrategyALL(gank.getUrl(),context).into(holder.imgMeizhi);
+        MyImageLoader.Builder builder = new MyImageLoader.Builder();
+        builder.imgView(holder.imgMeizhi);
+        builder.url(gank.getUrl());
+        ImageLoaderUtil.getInstance().loadImage(context,builder.build());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,11 +76,12 @@ public class GirlListAdapter extends BaseListAdapter<Gank, GirlListAdapter.ViewH
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.img_meizhi)
-        ImageView imgMeizhi;
+        RatioImageView imgMeizhi;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+
         }
     }
 

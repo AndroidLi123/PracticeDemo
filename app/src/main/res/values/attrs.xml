@@ -6,10 +6,13 @@
     <attr name="circleWidth" format="dimension" />
     <attr name="dotCount" format="integer" />
     <attr name="splitSize" format="integer" />
-    <attr name="bg" format="reference"></attr>
+    <attr name="bg" format="reference"/>
     <attr name="type" format="integer" />
-    <attr name="linelength" format="dimension"></attr>
-    <attr name="delay" format="integer"></attr>
+    <attr name="linelength" format="dimension"/>
+    <attr name="delay" format="integer"/>
+
+    <attr name="item_text_color" format="reference|color"/>
+
     <declare-styleable name="CustomVolumControlBar">
         <attr name="firstColor" />
         <attr name="secondColor" />

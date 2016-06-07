@@ -46,5 +46,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.takisoft.fix:preference-v7:23.3.0.4-beta'
     compile 'io.realm:realm-android:0.87.5'
+    compile 'com.zhy:changeskin:4.0.2'
+    compile 'de.greenrobot:eventbus:2.4.0'
 
 }

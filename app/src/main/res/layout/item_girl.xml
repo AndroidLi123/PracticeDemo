@@ -7,9 +7,8 @@
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="1dp">
 
-    <ImageView
+    <com.gank.widget.RatioImageView
         android:id="@+id/img_meizhi"
-        android:src="@mipmap/meizhi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"

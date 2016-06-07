@@ -24,13 +24,20 @@
         android:layout="@layout/preference_category_widget"
         android:title="  ">
         <CheckBoxPreference
+            android:key="@string/onlywifi"
             android:layout="@layout/preference_item"
+            android:persistent="true"
             android:summary="仅在WiFi下加载图片"
-            android:title="无图模式"></CheckBoxPreference>
+            android:title="无图模式" />
+        <CheckBoxPreference
+            android:key="@string/switch_model"
+            android:layout="@layout/preference_item"
+            android:persistent="true"
+            android:title="夜间模式" />
         <Preference
             android:layout="@layout/preference_item"
             android:summary="当前缓存"
-            android:title="清除缓存"></Preference>
+            android:title="清除缓存" />
 
     </PreferenceCategory>
 
@@ -43,7 +50,7 @@
             android:title="GitHub" />
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="https://github.com/416679828"></intent>
+            android:data="https://github.com/416679828" />
         <Preference
             android:layout="@layout/preference_item"
             android:summary="androidlixiaowang@gmail.com"

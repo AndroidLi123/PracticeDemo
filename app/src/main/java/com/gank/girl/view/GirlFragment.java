@@ -1,12 +1,8 @@
 package com.gank.girl.view;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.gank.base.BaseListAdapter;
@@ -58,7 +54,6 @@ public class GirlFragment extends BaseListFragment implements GirlView, GirlList
         return layoutManager;
     }
 
-
     @Override
     public void setupDataToView(GankData gankData) {
         adapter.setmList(gankData.getResults());
@@ -79,23 +74,7 @@ public class GirlFragment extends BaseListFragment implements GirlView, GirlList
 
     @Override
     public void onItemClick(ImageView imageView, String imgUrl) {
-        startPictureActivity(imageView,imgUrl);
-    }
-
-    private void startPictureActivity(View transitView, String url) {
-        Intent intent = new Intent(getActivity(),PictureActivity.class);
-        intent.putExtra(PictureActivity.IMG_URL, url);
-        ActivityOptionsCompat optionsCompat
-                = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()
-                , transitView, PictureActivity.TRANSIT_PIC);
-        try {
-           ActivityCompat.startActivity(getActivity(), intent,
-                   optionsCompat.toBundle());
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            PictureActivity.start(getActivity(),url);
-        }
-
+        PictureActivity.start(mBaseActivity,imgUrl);
     }
 
 }
