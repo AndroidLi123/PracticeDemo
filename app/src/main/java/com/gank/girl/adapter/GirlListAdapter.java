@@ -76,7 +76,7 @@ public class GirlListAdapter extends BaseListAdapter<Gank, GirlListAdapter.ViewH
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.img_meizhi)
-        RatioImageView imgMeizhi;
+        public RatioImageView imgMeizhi;
 
         ViewHolder(View view) {
             super(view);

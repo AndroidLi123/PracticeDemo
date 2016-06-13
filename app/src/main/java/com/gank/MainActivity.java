@@ -17,7 +17,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
-
     @Bind(R.id.vp_horizontal_ntb)
     ViewPager viewPager;
     @Bind(R.id.toolbar)
@@ -40,43 +39,39 @@ public class MainActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.removeAllTabs();
-        View view1 = getLayoutInflater().inflate(R.layout.customtab, null);
-        view1.findViewById(R.id.img_tab).setBackgroundResource(R.drawable.selector_hot);
-        TextView textView1 =  ((TextView)view1.findViewById(R.id.txt_tab));
-        textView1.setText("热文");
-        tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
+        addTab(getLayoutInflater().inflate(R.layout.customtab, null),R.drawable.selector_hot,"热文");
+        addTab(getLayoutInflater().inflate(R.layout.customtab, null),R.drawable.selector_girl,"美图");
+        addTab(getLayoutInflater().inflate(R.layout.customtab, null),R.drawable.selector_user,"我的");
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab == tabLayout.getTabAt(0)) {
+                    viewPager.setCurrentItem(0, false);
+                } else if (tab == tabLayout.getTabAt(1)) {
+                    viewPager.setCurrentItem(1, false);
+                } else if (tab == tabLayout.getTabAt(2)) {
+                    viewPager.setCurrentItem(2, false);
+                }
+            }
 
-        View view2 = getLayoutInflater().inflate(R.layout.customtab, null);
-        view2.findViewById(R.id.img_tab).setBackgroundResource(R.drawable.selector_girl);
-        ((TextView)view2.findViewById(R.id.txt_tab)).setText("美图");
-        tabLayout.addTab(tabLayout.newTab().setCustomView(view2));
-
-
-        View view3 = getLayoutInflater().inflate(R.layout.customtab, null);
-        view3.findViewById(R.id.img_tab).setBackgroundResource(R.drawable.selector_user);
-        ((TextView)view3.findViewById(R.id.txt_tab)).setText("我的");
-        tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
-   /*     for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            Drawable d = null;
-            switch (i) {
-                case 0:
-                    d = getResources().getDrawable(R.drawable.selector_hot);
-                    break;
-                case 1:
-                    d = getResources().getDrawable(R.drawable.selector_girl);
-                    break;
-                case 2:
-                    d = getResources().getDrawable(R.drawable.selector_user);
-                    break;
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
             }
-            if (tab != null) {
-                tab.setIcon(d);
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        }*/
+        });
 
+    }
+
+    private void addTab(View view, int drawable, String title) {
+        view.findViewById(R.id.img_tab).setBackgroundResource(drawable);
+        TextView textView1 = ((TextView) view.findViewById(R.id.txt_tab));
+        textView1.setText(title);
+        tabLayout.addTab(tabLayout.newTab().setCustomView(view));
     }
 
     @Override
