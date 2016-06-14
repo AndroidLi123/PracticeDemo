@@ -35,7 +35,7 @@ public class GirlFragment extends BaseListFragment implements GirlView, GirlList
 
     @Override
     protected BaseListAdapter onCreateAdapter() {
-        GirlListAdapter adapter = new GirlListAdapter(list,getActivity());
+        GirlListAdapter adapter = new GirlListAdapter(list,mBaseActivity);
         adapter.setOnItemClickListener(this);
         return adapter;
     }

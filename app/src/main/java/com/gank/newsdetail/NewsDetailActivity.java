@@ -86,7 +86,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
         // 开启 DOM storage API 功能
         wvNews.getSettings().setDomStorageEnabled(true);
         //为可折叠toolbar设置标题
-        mCollapsingToolbarLayout.setTitle(getString(R.string.zhihu_newspaper));
+        mCollapsingToolbarLayout.setTitle(getString(R.string.hot_zhihu));
     }
 
 

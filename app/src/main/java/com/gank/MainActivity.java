@@ -52,12 +52,17 @@ public class MainActivity extends BaseActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab == tabLayout.getTabAt(0)) {
-                    viewPager.setCurrentItem(0, false);
-                } else if (tab == tabLayout.getTabAt(1)) {
-                    viewPager.setCurrentItem(1, false);
-                } else if (tab == tabLayout.getTabAt(2)) {
-                    viewPager.setCurrentItem(2, false);
+                viewPager.setCurrentItem(tab.getPosition(), false);
+                switch (tab.getPosition()) {
+                    case 0:
+                        setActionBarTitle(getString(R.string.hot_zhihu));
+                        break;
+                    case 1:
+                        setActionBarTitle(getString(R.string.girl));
+                        break;
+                    case 2:
+                        setActionBarTitle(getString(R.string.mine));
+                        break;
                 }
             }
 
@@ -71,6 +76,11 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void setActionBarTitle(String title) {
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(title);
     }
 
     private void addTabToTabLayout() {

@@ -22,12 +22,15 @@ import com.gank.common.ImageLoaderUtil;
 import com.gank.common.MyImageLoader;
 import com.gank.data.Story;
 import com.gank.newsdetail.NewsDetailActivity;
+import com.jakewharton.rxbinding.view.RxView;
 import com.zhy.changeskin.SkinManager;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.functions.Action1;
 
 /**
  * Created by LiXiaoWang
@@ -62,7 +65,7 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
     @Override
     public void addmList(List<Story> addList) {
         mList.addAll(addList);
-        notifyDataSetChanged();
+        notifyItemRangeInserted(getItemCount(), addList.size());
 
     }
 
@@ -105,36 +108,42 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
         return builder;
     }
 
-    private void setOnItemViewClickListener(ViewHolder holder, final long newsid) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewCompat.animate(v)
-                        .setDuration(200)
-                        .scaleX(0.9f)
-                        .scaleY(0.9f)
-                        .setInterpolator(new CycleInterpolator())
-                        .setListener(new ViewPropertyAnimatorListener() {
-                            @Override
-                            public void onAnimationStart(final View view) {
+    private void setOnItemViewClickListener(final ViewHolder holder, final long newsid) {
+        RxView.clicks(holder.itemView)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS) // 设置防抖间隔为 500ms
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        onItemViewClickEvent(newsid, holder.itemView);
+                    }
+                });
+    }
 
-                            }
+    private void onItemViewClickEvent(final long newsid, View view) {
+        ViewCompat.animate(view)
+                .setDuration(200)
+                .scaleX(0.9f)
+                .scaleY(0.9f)
+                .setInterpolator(new CycleInterpolator())
+                .setListener(new ViewPropertyAnimatorListener() {
+                    @Override
+                    public void onAnimationStart(final View view) {
 
-                            @Override
-                            public void onAnimationEnd(final View view) {
-                                NewsDetailActivity.start(newsid);
+                    }
 
-                            }
+                    @Override
+                    public void onAnimationEnd(final View view) {
+                        NewsDetailActivity.start(newsid);
 
-                            @Override
-                            public void onAnimationCancel(final View view) {
+                    }
 
-                            }
-                        })
-                        .withLayer()
-                        .start();
-            }
-        });
+                    @Override
+                    public void onAnimationCancel(final View view) {
+
+                    }
+                })
+                .withLayer()
+                .start();
     }
 
     @Override

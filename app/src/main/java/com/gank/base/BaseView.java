@@ -1,7 +1,7 @@
 package com.gank.base;
 
 /**
- * Created by thinkpad on 2016/4/29.
+ * Created by LiXiaoWang
  */
 public interface BaseView {
     void showProgress();

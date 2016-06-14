@@ -13,7 +13,6 @@ import android.view.View;
 import com.gank.R;
 
 public class MyLoadingView extends View {
-
     private int mFirstColor;
     private int mSecondColor;
     private int mCircleWidth;
@@ -152,18 +151,13 @@ public class MyLoadingView extends View {
     }
 
     private void drawOval(Canvas canvas, int centreX, int centreY, int radius) {
-
         float itemSize = (360 * 1.0f - mCount * mSplitSize) / mCount;
-
         RectF oval = new RectF(centreX - radius, centreY - radius, centreX + radius, centreY + radius);
-
         if (!isNext)
             mPaint.setColor(mFirstColor);
         else
             mPaint.setColor(mSecondColor);
-
         drawAllOrCurrentCircle(canvas, itemSize, oval, true, mCount);
-
         drawAllOrCurrentCircle(canvas, itemSize, oval, false, mCurrentCount);
 
     }

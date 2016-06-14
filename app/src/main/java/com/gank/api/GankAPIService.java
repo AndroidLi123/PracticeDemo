@@ -1,8 +1,6 @@
 package com.gank.api;
 
-import com.gank.data.DayGankData;
 import com.gank.data.GankData;
-import com.gank.data.HistoryData;
 import com.gank.data.News;
 import com.gank.data.TodayNews;
 
@@ -15,12 +13,6 @@ import rx.Observable;
  * Created by thinkpad on 2016/4/29.
  */
 public interface GankAPIService {
-    @GET("day/history")
-    Observable<HistoryData> getHistoryData();
-
-    @GET("day/2016/04/29")
-    Observable<DayGankData>getDayData();
-
     @Headers("Cache-Control: public, max-age=10")
     @GET("news/latest")
     Observable<TodayNews> getTodayNews();

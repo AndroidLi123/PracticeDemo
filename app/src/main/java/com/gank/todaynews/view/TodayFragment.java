@@ -24,6 +24,7 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
     private TodayPresenter dayGankPresenter;
     private Realm realm;
     private ArrayMap<Long, Boolean> mMap = new ArrayMap<>();
+
     public TodayFragment() {
     }
 
@@ -34,7 +35,7 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
 
     protected void init() {
         EventBus.getDefault().register(this);
-        dayGankPresenter = new TodayPresenterImp(new TodayModelImp(getContext()), this);
+        dayGankPresenter = new TodayPresenterImp(new TodayModelImp(),this);
         realm = Realm.getDefaultInstance();
     }
 
@@ -92,11 +93,11 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
     }
 
     @Override
-    public void onImgClick(Story dayGankData, boolean isChecked,ArrayMap<Long, Boolean> mMap) {
-        mMap.put(dayGankData.getmId(),isChecked);
-        if(isChecked) {
+    public void onImgClick(Story dayGankData, boolean isChecked, ArrayMap<Long, Boolean> mMap) {
+        mMap.put(dayGankData.getmId(), isChecked);
+        if (isChecked) {
             copyToDataBase(dayGankData);
-        }else {
+        } else {
             removeFromDataBase(dayGankData);
         }
 
