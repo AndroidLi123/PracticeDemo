@@ -1,8 +1,5 @@
 package com.practice.network;
 
-import com.practice.GankApplication;
-import com.practice.api.GankAPIService;
-import com.practice.data.StringObject;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -11,6 +8,9 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.practice.PracticeApplication;
+import com.practice.api.GankAPIService;
+import com.practice.data.StringObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,11 +34,11 @@ public class RetrofitNetwork {
     private final GankAPIService gankAPIService;
     private final Retrofit retrofit;
     public RetrofitNetwork() {
-        File httpCacheDirectory = new File(GankApplication.sContext.getCacheDir(), "responses");
+        File httpCacheDirectory = new File(PracticeApplication.sContext.getCacheDir(), "responses");
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
-        CacheControlInterceptor cacheControlInterceptor = new CacheControlInterceptor(GankApplication.sContext);
+        CacheControlInterceptor cacheControlInterceptor = new CacheControlInterceptor(PracticeApplication.sContext);
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override

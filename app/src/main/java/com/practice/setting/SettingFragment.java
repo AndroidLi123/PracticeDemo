@@ -9,7 +9,7 @@ import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.Preference;
 
 import com.bumptech.glide.Glide;
-import com.practice.GankApplication;
+import com.practice.PracticeApplication;
 import com.practice.R;
 import com.practice.common.DataCleanManager;
 import com.practice.personal.MyCollectedPaperActivity;
@@ -56,7 +56,7 @@ public class SettingFragment extends PreferenceFragmentCompatDividers implements
 
     private void setPreference_DeleteCacheSummary() {
         try {
-            preference_deletecache.setSummary(DataCleanManager.getCacheSize(GankApplication.sContext.getCacheDir()));
+            preference_deletecache.setSummary(DataCleanManager.getCacheSize(PracticeApplication.sContext.getCacheDir()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,7 +114,7 @@ public class SettingFragment extends PreferenceFragmentCompatDividers implements
     private void onPositiveClick() {
         new Thread() {
             public void run() {
-                DataCleanManager.cleanInternalCache(GankApplication.sContext);
+                DataCleanManager.cleanInternalCache(PracticeApplication.sContext);
                 Glide.get(getActivity()).clearDiskCache();
                 EventBus.getDefault().post(new ClearCacheEvent());
 

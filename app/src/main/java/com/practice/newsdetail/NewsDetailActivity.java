@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.practice.GankApplication;
+import com.practice.PracticeApplication;
 import com.practice.R;
 import com.practice.base.BaseActivity;
 import com.practice.common.HtmlUtil;
@@ -52,12 +52,12 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     public static final String NEWS_ID = "newsid";
 
     public static void start(Long newsid) {
-        Intent intent = new Intent(GankApplication.getAppContext(), NewsDetailActivity.class);
+        Intent intent = new Intent(PracticeApplication.getAppContext(), NewsDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putLong(NEWS_ID, newsid);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        GankApplication.getAppContext().startActivity(intent);
+        PracticeApplication.getAppContext().startActivity(intent);
     }
 
     @Override
