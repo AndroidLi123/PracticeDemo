@@ -7,7 +7,7 @@
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="1dp">
 
-    <com.practice.widget.RatioImageView
+    <ImageView
         android:id="@+id/img_meizhi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

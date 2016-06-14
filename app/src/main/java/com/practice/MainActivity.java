@@ -55,13 +55,13 @@ public class MainActivity extends BaseActivity {
                 viewPager.setCurrentItem(tab.getPosition(), false);
                 switch (tab.getPosition()) {
                     case 0:
-                        setActionBarTitle(getString(R.string.hot_zhihu));
+                        setToolBarTitle(getString(R.string.hot_zhihu));
                         break;
                     case 1:
-                        setActionBarTitle(getString(R.string.girl));
+                        setToolBarTitle(getString(R.string.girl));
                         break;
                     case 2:
-                        setActionBarTitle(getString(R.string.mine));
+                        setToolBarTitle(getString(R.string.mine));
                         break;
                 }
             }
@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void setActionBarTitle(String title) {
+    private void setToolBarTitle(String title) {
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(title);
     }

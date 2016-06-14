@@ -14,7 +14,6 @@ import com.practice.base.BaseListAdapter;
 import com.practice.common.ImageLoaderUtil;
 import com.practice.common.MyImageLoader;
 import com.practice.data.entitiy.Gank;
-import com.practice.widget.RatioImageView;
 
 import java.util.List;
 
@@ -87,7 +86,7 @@ public class GirlListAdapter extends BaseListAdapter<Gank, GirlListAdapter.ViewH
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.img_meizhi)
-        public RatioImageView imgMeizhi;
+        public ImageView imgMeizhi;
 
         ViewHolder(View view) {
             super(view);
