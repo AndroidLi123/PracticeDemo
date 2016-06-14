@@ -71,7 +71,7 @@
             android:scrollbars="none" />
     </android.support.v4.widget.NestedScrollView>
 
-    <com.gank.widget.MyLoadingView
+    <com.practice.widget.MyLoadingView
         android:id="@+id/progress_view"
         android:layout_width="100dp"
         android:layout_height="100dp"

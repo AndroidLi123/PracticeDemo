@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/md_grey_300"
     android:tag="skin:main_background:background"
-    tools:context="com.gank.MainActivity">
+    tools:context="com.practice.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
