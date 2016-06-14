@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gank</string>
+    <string name="app_name">练习项目</string>
     <string name="hot_zhihu">热文</string>
     <string name="notify_priority">notify_priority</string>
     <string name="title_activity_setting">设置</string>
