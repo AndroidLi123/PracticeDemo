@@ -10,5 +10,7 @@ PracticeDemo is my  exercise project in my leisure time.
 - retrofit
 - realm
 
+![hot_news.png](https://github.com/416679828/PracticeDemo/blob/master/hot_news.png)
+
 
 
