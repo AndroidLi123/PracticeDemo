@@ -8,5 +8,7 @@ PracticeDemo is my  exercise project in my leisure time.
 - switch app theme
 - rxjava
 - retrofit
+- realm
+
 
 
