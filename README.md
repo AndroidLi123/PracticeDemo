@@ -7,5 +7,6 @@ PracticeDemo is my  exercise project in my leisure time.
 - process cache
 - switch app theme
 - rxjava
+- retrofit
 
 
