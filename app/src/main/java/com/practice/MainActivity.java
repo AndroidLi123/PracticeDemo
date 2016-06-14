@@ -53,17 +53,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition(), false);
-                switch (tab.getPosition()) {
-                    case 0:
-                        setToolBarTitle(getString(R.string.hot_zhihu));
-                        break;
-                    case 1:
-                        setToolBarTitle(getString(R.string.girl));
-                        break;
-                    case 2:
-                        setToolBarTitle(getString(R.string.mine));
-                        break;
-                }
+                SwitchPositionToSetToolBarTitle(tab);
             }
 
             @Override
@@ -76,6 +66,20 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void SwitchPositionToSetToolBarTitle(TabLayout.Tab tab) {
+        switch (tab.getPosition()) {
+            case 0:
+                setToolBarTitle(getString(R.string.hot_zhihu));
+                break;
+            case 1:
+                setToolBarTitle(getString(R.string.girl));
+                break;
+            case 2:
+                setToolBarTitle(getString(R.string.mine));
+                break;
+        }
     }
 
     private void setToolBarTitle(String title) {
