@@ -35,6 +35,7 @@
             android:persistent="true"
             android:title="夜间模式" />
         <Preference
+            android:key="@string/delete_cache"
             android:layout="@layout/preference_item"
             android:summary="当前缓存"
             android:title="清除缓存" />

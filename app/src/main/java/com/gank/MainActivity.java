@@ -31,17 +31,24 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        tabLayout.setupWithViewPager(initViewPager(viewPager));
+        addTabToTabLayout();
+        setOnTabSelectedListener();
+    }
+
+    private ViewPager initViewPager(ViewPager viewPager) {
         viewPager.setOffscreenPageLimit(3);
+        viewPager.setAdapter(initAdapter());
+        return viewPager;
+    }
+
+    private BaseNewTaskFragmentPagerAdapter initAdapter() {
         adapter = new BaseNewTaskFragmentPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new TodayFragment());
-        adapter.addFragment(new GirlFragment());
-        adapter.addFragment(new SettingFragment());
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.removeAllTabs();
-        addTab(getLayoutInflater().inflate(R.layout.customtab, null),R.drawable.selector_hot,"热文");
-        addTab(getLayoutInflater().inflate(R.layout.customtab, null),R.drawable.selector_girl,"美图");
-        addTab(getLayoutInflater().inflate(R.layout.customtab, null),R.drawable.selector_user,"我的");
+        addFragmentToAdapter(adapter);
+        return adapter;
+    }
+
+    private void setOnTabSelectedListener() {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -64,7 +71,19 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
 
+    private void addTabToTabLayout() {
+        tabLayout.removeAllTabs();
+        addTab(getLayoutInflater().inflate(R.layout.customtab, null), R.drawable.selector_hot, "热文");
+        addTab(getLayoutInflater().inflate(R.layout.customtab, null), R.drawable.selector_girl, "美图");
+        addTab(getLayoutInflater().inflate(R.layout.customtab, null), R.drawable.selector_user, "我的");
+    }
+
+    private void addFragmentToAdapter(BaseNewTaskFragmentPagerAdapter adapter) {
+        adapter.addFragment(new TodayFragment());
+        adapter.addFragment(new GirlFragment());
+        adapter.addFragment(new SettingFragment());
     }
 
     private void addTab(View view, int drawable, String title) {

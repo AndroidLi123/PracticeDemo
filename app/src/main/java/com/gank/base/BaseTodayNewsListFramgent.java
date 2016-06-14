@@ -2,9 +2,7 @@ package com.gank.base;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import com.gank.common.ItemAnimater;
 import com.gank.data.Story;
 import com.gank.itemanimator.ItemAnimatorFactory;
 import com.gank.todaynews.adapter.TodayItemAdapter;
@@ -19,13 +17,11 @@ public abstract class BaseTodayNewsListFramgent extends BaseListFragment {
     private List<Story> dayGankDatas = new ArrayList<>();
     protected TodayItemAdapter todayItemAdapter;
     private boolean animated = true;
-    private ItemAnimater itemAnimater;
     protected abstract void setImgCollectListener(TodayItemAdapter adapter);
 
     @Override
     protected BaseListAdapter onCreateAdapter() {
         todayItemAdapter = new TodayItemAdapter(dayGankDatas, getActivity(), animated);
-        Log.d("animated",animated+"");
         setImgCollectListener(todayItemAdapter);
         animated = false;
         return todayItemAdapter;

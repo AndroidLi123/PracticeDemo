@@ -23,19 +23,21 @@ public class CacheControlInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-
+        boolean isResponseFromCache = false;
         Request request = chain.request();
         if (!CommonUtils.isNetWorkConnected(context)) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
+            isResponseFromCache = true;
         }
         Response originalResponse = chain.proceed(request);
+        if (isResponseFromCache)
+            return originalResponse;
         if (CommonUtils.isNetWorkConnected(context)) {
-            int maxAge = 60; // 在线缓存在1分钟内可读取
-            String cachecontrol = request.cacheControl().toString();
+            String cacheControl = request.cacheControl().toString();
             return originalResponse.newBuilder().removeHeader("Pragma")
-                    .header("Cache-Control", "public, max-age=" + maxAge)
+                    .header("Cache-Control", cacheControl)
                     .build();
         } else {
             int maxStale = 60 * 60 * 24 * 28; // 离线时缓存保存4周
@@ -45,3 +47,4 @@ public class CacheControlInterceptor implements Interceptor {
         }
     }
 }
+

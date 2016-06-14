@@ -24,7 +24,6 @@ public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
         boolean isWiFiChecked = shp.getBoolean(ctx.getString(R.string.onlywifi), false);
         if (isWiFiChecked) {
             if (CommonUtils.getConnectedType(ctx) == CommonUtils.NETWORKTYPE_WIFI) {
-
                 loadNormal(ctx, img);
             } else {
                 loadCache(ctx, img);
@@ -42,7 +41,9 @@ public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
      * load image with Glide
      */
     private void loadNormal(Context ctx, MyImageLoader img) {
-        Glide.with(ctx).load(img.getUrl()).placeholder(img.getPlaceHolder()).into(img.getImgView());
+        Glide.with(ctx).load(img.getUrl()).placeholder(img.getPlaceHolder()).
+                diskCacheStrategy(img.getDiskCacheStrategy()).
+                into(img.getImgView());
     }
 
 

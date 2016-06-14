@@ -1,12 +1,14 @@
 package com.gank.girl.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.R;
 import com.gank.base.BaseListAdapter;
 import com.gank.common.ImageLoaderUtil;
@@ -53,11 +55,21 @@ public class GirlListAdapter extends BaseListAdapter<Gank, GirlListAdapter.ViewH
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Gank gank = getItem(position);
+        ImageLoaderUtil.getInstance().loadImage(context,createBuilder(holder, gank).build());
+        onItemViewClick(holder, gank);
+
+    }
+
+    @NonNull
+    private MyImageLoader.Builder createBuilder(ViewHolder holder, Gank gank) {
         MyImageLoader.Builder builder = new MyImageLoader.Builder();
         builder.imgView(holder.imgMeizhi);
         builder.url(gank.getUrl());
-        ImageLoaderUtil.getInstance().loadImage(context,builder.build());
+        builder.diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        return builder;
+    }
 
+    private void onItemViewClick(final ViewHolder holder, final Gank gank) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +77,6 @@ public class GirlListAdapter extends BaseListAdapter<Gank, GirlListAdapter.ViewH
 
             }
         });
-
     }
 
     @Override

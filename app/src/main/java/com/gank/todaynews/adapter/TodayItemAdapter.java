@@ -1,6 +1,7 @@
 package com.gank.todaynews.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.CardView;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.R;
 import com.gank.base.BaseListAdapter;
 import com.gank.common.CycleInterpolator;
@@ -33,7 +35,6 @@ import butterknife.ButterKnife;
 public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.ViewHolder> {
     private Context context;
     private ArrayMap<Long, Boolean> mMap = new ArrayMap<>();
-    private boolean animated;
     public onImgCollectClickListener listener;
 
     public void setListener(onImgCollectClickListener listener) {
@@ -43,7 +44,6 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
     public TodayItemAdapter(List<Story> list, Context context, boolean animated) {
         super(list);
         this.context = context;
-        this.animated = animated;
         setHasStableIds(true);
 
     }
@@ -56,20 +56,13 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
     @Override
     public void setmList(List<Story> stories) {
         mList = stories;
-        //if (animated)
-            notifyItemRangeInserted(getItemCount(), stories.size());
-       /* else
-            notifyDataSetChanged();*/
-
+        notifyItemRangeInserted(getItemCount(), stories.size());
     }
 
     @Override
     public void addmList(List<Story> addList) {
         mList.addAll(addList);
-       /* if (animated)
-            notifyItemRangeInserted(getItemCount(), addList.size());
-        else*/
-            notifyDataSetChanged();
+        notifyDataSetChanged();
 
     }
 
@@ -83,33 +76,36 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        // holder.setIsRecyclable(false);
         final Story dayGankData = mList.get(position);
-        final long newsid = dayGankData.getmId();
         String imgUrl = dayGankData.getmImageUrls().get(0).getString();
-        String des = dayGankData.getmTitle();
-        holder.cardView.setTag(des);
+        holder.cardView.setTag(dayGankData.getmTitle());
+        holder.txtDes.setText(dayGankData.getmTitle());
         Boolean isChecked = mMap.get(dayGankData.getmId());
-        if (isChecked != null && isChecked)
-            holder.check_collect.setChecked(true);
-        else
-            holder.check_collect.setChecked(false);
+        holder.check_collect.setChecked(isChecked != null && isChecked);
+        setOnCheckBoxClickListener(holder, dayGankData);
+        ImageLoaderUtil.getInstance().loadImage(context, getBuilder(holder, imgUrl).build());
+        setOnItemViewClickListener(holder, dayGankData.getmId());
+    }
+
+    private void setOnCheckBoxClickListener(ViewHolder holder, final Story dayGankData) {
         holder.check_collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckBox checkbox = (CheckBox) v;
-                listener.onImgClick(dayGankData, checkbox.isChecked(),mMap);
-                //mMap.put(dayGankData.getmId(),checkbox.isChecked());
-                //notifyItemChanged(holder.getLayoutPosition());
-
+                listener.onImgClick(dayGankData, ((CheckBox) v).isChecked(), mMap);
             }
         });
+    }
 
+    @NonNull
+    private MyImageLoader.Builder getBuilder(ViewHolder holder, String imgUrl) {
         MyImageLoader.Builder builder = new MyImageLoader.Builder();
         builder.imgView(holder.imgMeizhi);
         builder.url(imgUrl);
-        ImageLoaderUtil.getInstance().loadImage(context, builder.build());
-        holder.txtDes.setText(des);
+        builder.diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        return builder;
+    }
+
+    private void setOnItemViewClickListener(ViewHolder holder, final long newsid) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +143,7 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
     }
 
     public interface onImgCollectClickListener {
-        void onImgClick(Story dayGankData, boolean isChecked,ArrayMap<Long, Boolean> mMap);
+        void onImgClick(Story dayGankData, boolean isChecked, ArrayMap<Long, Boolean> mMap);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -159,11 +155,10 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
         CheckBox check_collect;
         @Bind(R.id.card_view)
         CardView cardView;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
-
 
         }
     }

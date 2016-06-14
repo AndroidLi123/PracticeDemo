@@ -3,14 +3,17 @@ package com.gank.girl.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.gank.R;
-import com.gank.common.ImageLoader;
+import com.gank.common.ImageLoaderUtil;
+import com.gank.common.MyImageLoader;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,15 +39,27 @@ public class PictureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_picture);
         ButterKnife.bind(this);
         imgurl = getIntent().getStringExtra(IMG_URL);
-        ImageLoader.getInstance().LoadImageWithDiskCacheStrategyALL(imgurl,this).centerCrop().into(imgGirl);
+        ImageLoaderUtil.getInstance().loadImage(this,createBuilder().build());
+        onImgGirlClick();
+
+    }
+
+    private void onImgGirlClick() {
         imgGirl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
             }
         });
+    }
 
+    @NonNull
+    private MyImageLoader.Builder createBuilder() {
+        MyImageLoader.Builder builder = new MyImageLoader.Builder();
+        builder.imgView(imgGirl);
+        builder.url(imgurl);
+        builder.diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        return builder;
     }
 
 }

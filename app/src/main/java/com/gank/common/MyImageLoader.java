@@ -2,6 +2,7 @@ package com.gank.common;
 
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.R;
 
 /**
@@ -13,6 +14,7 @@ public class MyImageLoader {
     private int placeHolder; //当没有成功加载的时候显示的图片
     private ImageView imgView; //ImageView的实例
     private int strategy;//加载策略，是否在wifi下才加载
+    private DiskCacheStrategy diskCacheStrategy;
 
     private MyImageLoader(Builder builder) {
         this.type = builder.type;
@@ -20,7 +22,9 @@ public class MyImageLoader {
         this.placeHolder = builder.placeHolder;
         this.imgView = builder.imgView;
         this.strategy = builder.strategy;
+        this.diskCacheStrategy = builder.diskCacheStrategy;
     }
+
     public int getType() {
         return type;
     }
@@ -41,12 +45,17 @@ public class MyImageLoader {
         return strategy;
     }
 
+    public DiskCacheStrategy getDiskCacheStrategy() {
+        return diskCacheStrategy;
+    }
+
     public static class Builder {
         private int type;
         private String url;
         private int placeHolder;
         private ImageView imgView;
         private int strategy;
+        private DiskCacheStrategy diskCacheStrategy;
 
         public Builder() {
             this.type = ImageLoaderUtil.PIC_SMALL;
@@ -54,6 +63,7 @@ public class MyImageLoader {
             this.placeHolder = R.color.colorPrimary;
             this.imgView = null;
             this.strategy = ImageLoaderUtil.LOAD_STRATEGY_NORMAL;
+            this.diskCacheStrategy = DiskCacheStrategy.ALL;
         }
 
         public Builder type(int type) {
@@ -78,6 +88,11 @@ public class MyImageLoader {
 
         public Builder strategy(int strategy) {
             this.strategy = strategy;
+            return this;
+        }
+
+        public Builder diskCacheStrategy(DiskCacheStrategy diskCacheStrategy) {
+            this.diskCacheStrategy = diskCacheStrategy;
             return this;
         }
 

@@ -2,6 +2,7 @@ package com.gank.newsdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
@@ -13,11 +14,13 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.GankApplication;
 import com.gank.R;
 import com.gank.base.BaseActivity;
 import com.gank.common.HtmlUtil;
-import com.gank.common.ImageLoader;
+import com.gank.common.ImageLoaderUtil;
+import com.gank.common.MyImageLoader;
 import com.gank.data.News;
 import com.gank.newsdetail.model.NewsDetailModelImp;
 import com.gank.newsdetail.presenter.NewsDetailPresenter;
@@ -46,7 +49,6 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     private NewsDetailPresenter newsDetailPresenter;
     private Long newsid;
-    private NewsDetailModelImp newsDetailModelImp;
     public static final String NEWS_ID = "newsid";
 
     public static void start(Long newsid) {
@@ -65,8 +67,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
         ButterKnife.bind(this);
         initUI();
         newsid = (Long) getIntent().getExtras().get(NEWS_ID);
-        newsDetailModelImp = new NewsDetailModelImp(this);
-        newsDetailPresenter = new NewsDetailPresenterImp(newsDetailModelImp,this);
+        newsDetailPresenter = new NewsDetailPresenterImp(new NewsDetailModelImp(this),this);
         loadNewsDetail();
     }
 
@@ -110,10 +111,19 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     @Override
     public void setupDataToView(News news) {
         String htmlData = HtmlUtil.createHtmlData(news);
-        ImageLoader.getInstance().LoadImage(news.getImage(),this,ivHeader);
+        ImageLoaderUtil.getInstance().loadImage(this, createBuilder(news).build());
         wvNews.loadData(htmlData, HtmlUtil.MIME_TYPE, HtmlUtil.ENCODING);
         tvSource.setText(news.getImageSource());
 
+    }
+
+    @NonNull
+    private MyImageLoader.Builder createBuilder(News news) {
+        MyImageLoader.Builder builder = new MyImageLoader.Builder();
+        builder.imgView(ivHeader);
+        builder.url(news.getImage());
+        builder.diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        return builder;
     }
 
     @Override

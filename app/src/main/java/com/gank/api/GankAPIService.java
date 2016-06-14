@@ -7,6 +7,7 @@ import com.gank.data.News;
 import com.gank.data.TodayNews;
 
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -20,6 +21,7 @@ public interface GankAPIService {
     @GET("day/2016/04/29")
     Observable<DayGankData>getDayData();
 
+    @Headers("Cache-Control: public, max-age=10")
     @GET("news/latest")
     Observable<TodayNews> getTodayNews();
 
