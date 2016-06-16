@@ -1,4 +1,4 @@
-package com.practice.itemanimator;
+package com.practice.common.itemanimator;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.animation.DecelerateInterpolator;

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.jakewharton.rxbinding.view.RxView;
 import com.practice.R;
 import com.practice.base.BaseListAdapter;
 import com.practice.common.CycleInterpolator;
@@ -22,7 +23,6 @@ import com.practice.common.ImageLoaderUtil;
 import com.practice.common.MyImageLoader;
 import com.practice.data.Story;
 import com.practice.newsdetail.NewsDetailActivity;
-import com.jakewharton.rxbinding.view.RxView;
 import com.zhy.changeskin.SkinManager;
 
 import java.util.List;
@@ -72,7 +72,6 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_daygank, parent, false);
-        SkinManager.getInstance().injectSkin(view);
         return new ViewHolder(view);
 
     }
@@ -86,7 +85,7 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
         Boolean isChecked = mMap.get(dayGankData.getmId());
         holder.check_collect.setChecked(isChecked != null && isChecked);
         setOnCheckBoxClickListener(holder, dayGankData);
-        ImageLoaderUtil.getInstance().loadImage(context, getBuilder(holder, imgUrl).build());
+        ImageLoaderUtil.getInstance().loadImage(context, createBuilder(holder, imgUrl).build());
         setOnItemViewClickListener(holder, dayGankData.getmId());
     }
 
@@ -100,7 +99,7 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
     }
 
     @NonNull
-    private MyImageLoader.Builder getBuilder(ViewHolder holder, String imgUrl) {
+    private MyImageLoader.Builder createBuilder(ViewHolder holder, String imgUrl) {
         MyImageLoader.Builder builder = new MyImageLoader.Builder();
         builder.imgView(holder.imgMeizhi);
         builder.url(imgUrl);
@@ -168,6 +167,7 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            SkinManager.getInstance().injectSkin(view);
 
         }
     }

@@ -1,4 +1,4 @@
-package com.practice.itemanimator;
+package com.practice.common.itemanimator;
 
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;

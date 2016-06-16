@@ -48,7 +48,6 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     @Bind(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     private NewsDetailPresenter newsDetailPresenter;
-    private Long newsid;
     public static final String NEWS_ID = "newsid";
 
     public static void start(Long newsid) {
@@ -66,27 +65,33 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
         setContentView(R.layout.activity_news_detail);
         ButterKnife.bind(this);
         initUI();
-        newsid = (Long) getIntent().getExtras().get(NEWS_ID);
         newsDetailPresenter = new NewsDetailPresenterImp(new NewsDetailModelImp(this),this);
-        loadNewsDetail();
+        loadNewsDetail((Long) getIntent().getExtras().get(NEWS_ID));
     }
 
     private void initUI() {
-        setSupportActionBar(mToolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
+        setToolbar(mToolbar);
         mNestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        setWebView(wvNews);
+        //为可折叠toolbar设置标题
+        mCollapsingToolbarLayout.setTitle(getString(R.string.hot_zhihu));
+    }
+
+    private void setWebView(WebView wvNews) {
         wvNews.setOverScrollMode(View.OVER_SCROLL_NEVER);
         wvNews.getSettings().setLoadsImagesAutomatically(true);
         //设置 缓存模式
         wvNews.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         // 开启 DOM storage API 功能
         wvNews.getSettings().setDomStorageEnabled(true);
-        //为可折叠toolbar设置标题
-        mCollapsingToolbarLayout.setTitle(getString(R.string.hot_zhihu));
+    }
+
+    private void setToolbar(Toolbar mToolbar) {
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 
@@ -103,7 +108,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     }
 
     @Override
-    public void loadNewsDetail() {
+    public void loadNewsDetail(long newsid) {
         newsDetailPresenter.loadNewsDetail(newsid);
 
     }

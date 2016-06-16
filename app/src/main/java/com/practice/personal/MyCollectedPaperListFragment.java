@@ -24,13 +24,8 @@ public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent impl
         realm = Realm.getDefaultInstance();
         RealmQuery<Story> query = realm.where(Story.class);
         results = query.findAll();
-        if (results != null) {
-            for (int i = 0; i < results.size(); i++) {
-                mMap.put(results.get(i).getmId(), true);
-
-            }
-        }
     }
+
 
     @Override
     protected void setImgCollectListener(TodayItemAdapter adapter) {
@@ -40,18 +35,31 @@ public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent impl
     @Override
     protected void loadData() {
         adapter.setmList(results);
-        todayItemAdapter.setmMap(mMap);
+        todayItemAdapter.setmMap(putElementToMap(results, mMap));
 
     }
 
+    private ArrayMap<Long, Boolean> putElementToMap(RealmResults<Story> results, ArrayMap<Long, Boolean> mMap) {
+        if (results != null) {
+            for (int i = 0; i < results.size(); i++) {
+                mMap.put(results.get(i).getmId(), true);
+            }
+        }
+        return mMap;
+    }
+
     @Override
-    public void onImgClick(Story dayGankData, boolean isChecked,ArrayMap<Long, Boolean> mMap) {
+    public void onImgClick(Story dayGankData, boolean isChecked, ArrayMap<Long, Boolean> mMap) {
         if (!isChecked) {
-            realm.beginTransaction();
-            dayGankData.removeFromRealm();
-            realm.commitTransaction();
-            adapter.notifyDataSetChanged();
+            removeDataFromDB(dayGankData);
         }
 
+    }
+
+    private void removeDataFromDB(Story dayGankData) {
+        realm.beginTransaction();
+        dayGankData.removeFromRealm();
+        realm.commitTransaction();
+        adapter.notifyDataSetChanged();
     }
 }

@@ -22,7 +22,9 @@ public class MyCollectedPaperActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new MyCollectedPaperListFragment()).commit();
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.container, new MyCollectedPaperListFragment()).
+                commit();
     }
 
     @Override

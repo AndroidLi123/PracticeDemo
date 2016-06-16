@@ -7,7 +7,7 @@ import com.practice.data.News;
  * Created by LiXiaoWang
  */
 public interface NewsDetailView extends BaseView{
-    void loadNewsDetail();
+    void loadNewsDetail(long newsid);
     void setupDataToView(News news);
 
 }

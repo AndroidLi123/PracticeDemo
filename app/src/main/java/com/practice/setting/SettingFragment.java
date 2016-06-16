@@ -24,7 +24,6 @@ import de.greenrobot.event.EventBus;
 public class SettingFragment extends PreferenceFragmentCompatDividers implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
     private Preference preference_collection;
     private Preference preference_deletecache;
-    private CheckBoxPreference switchImageStragy;
     private CheckBoxPreference switchModel;
 
     @Override
@@ -42,9 +41,9 @@ public class SettingFragment extends PreferenceFragmentCompatDividers implements
     @Override
     public void onCreatePreferencesFix(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
+        CheckBoxPreference switchImageStragy = (CheckBoxPreference) findPreference(getString(R.string.onlywifi));
         preference_collection = findPreference(getString(R.string.notify_priority));
         preference_deletecache = findPreference(getString(R.string.delete_cache));
-        switchImageStragy = (CheckBoxPreference) findPreference(getString(R.string.onlywifi));
         switchModel = (CheckBoxPreference) findPreference(getString(R.string.switch_model));
         preference_collection.setOnPreferenceClickListener(this);
         preference_deletecache.setOnPreferenceClickListener(this);

@@ -32,16 +32,11 @@ public class TodayPresenterImp implements TodayPresenter {
 
             @Override
             public void onError(Throwable e) {
-                Log.d("error",e.getMessage());
                 todayView.hideProgress();
             }
 
             @Override
             public void onNext(TodayNews todayNews) {
-                Log.d("onnext", todayNews.getmDate());
-                /*realm.beginTransaction();
-                TodayNews realmRepos = realm.copyToRealmOrUpdate(todayNews);
-                realm.commitTransaction();*/
                 todayView.setupDayGankDataToView(todayNews);
 
             }

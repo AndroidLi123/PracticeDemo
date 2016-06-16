@@ -1,6 +1,7 @@
 package com.practice;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +24,6 @@ public class MainActivity extends BaseActivity {
     Toolbar mToolbar;
     @Bind(R.id.tab)
     TabLayout tabLayout;
-    private BaseNewTaskFragmentPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +43,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private BaseNewTaskFragmentPagerAdapter initAdapter() {
-        adapter = new BaseNewTaskFragmentPagerAdapter(getSupportFragmentManager());
-        addFragmentToAdapter(adapter);
-        return adapter;
+        return addFragmentToAdapter(createPagerAdapter());
+    }
+
+    @NonNull
+    private BaseNewTaskFragmentPagerAdapter createPagerAdapter() {
+        return new BaseNewTaskFragmentPagerAdapter(getSupportFragmentManager());
     }
 
     private void setOnTabSelectedListener() {
@@ -89,15 +92,19 @@ public class MainActivity extends BaseActivity {
 
     private void addTabToTabLayout() {
         tabLayout.removeAllTabs();
-        addTab(getLayoutInflater().inflate(R.layout.customtab, null), R.drawable.selector_hot, "热文");
-        addTab(getLayoutInflater().inflate(R.layout.customtab, null), R.drawable.selector_girl, "美图");
-        addTab(getLayoutInflater().inflate(R.layout.customtab, null), R.drawable.selector_user, "我的");
+        addTab(getLayoutInflater().inflate(R.layout.customtab, null),
+                R.drawable.selector_hot,getString(R.string.hot_zhihu));
+        addTab(getLayoutInflater().inflate(R.layout.customtab, null),
+                R.drawable.selector_girl, getString(R.string.girl));
+        addTab(getLayoutInflater().inflate(R.layout.customtab, null),
+                R.drawable.selector_user, getString(R.string.mine));
     }
 
-    private void addFragmentToAdapter(BaseNewTaskFragmentPagerAdapter adapter) {
+    private BaseNewTaskFragmentPagerAdapter addFragmentToAdapter(BaseNewTaskFragmentPagerAdapter adapter) {
         adapter.addFragment(new TodayFragment());
         adapter.addFragment(new GirlFragment());
         adapter.addFragment(new SettingFragment());
+        return adapter;
     }
 
     private void addTab(View view, int drawable, String title) {

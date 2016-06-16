@@ -4,7 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.practice.data.Story;
-import com.practice.itemanimator.ItemAnimatorFactory;
+import com.practice.common.itemanimator.ItemAnimatorFactory;
 import com.practice.todaynews.adapter.TodayItemAdapter;
 
 import java.util.ArrayList;

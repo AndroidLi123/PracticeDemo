@@ -24,7 +24,6 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
     private TodayPresenter dayGankPresenter;
     private Realm realm;
     private ArrayMap<Long, Boolean> mMap = new ArrayMap<>();
-
     public TodayFragment() {
     }
 
@@ -96,14 +95,14 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
     public void onImgClick(Story dayGankData, boolean isChecked, ArrayMap<Long, Boolean> mMap) {
         mMap.put(dayGankData.getmId(), isChecked);
         if (isChecked) {
-            copyToDataBase(dayGankData);
+            copyToDB(dayGankData);
         } else {
-            removeFromDataBase(dayGankData);
+            removeFromDB(dayGankData);
         }
 
     }
 
-    private void removeFromDataBase(Story dayGankData) {
+    private void removeFromDB(Story dayGankData) {
         realm.beginTransaction();
         RealmResults<Story> results = realm.where(Story.class).findAll();
         for (int i = 0; i < results.size(); i++) {
@@ -114,7 +113,7 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
         realm.commitTransaction();
     }
 
-    private void copyToDataBase(Story dayGankData) {
+    private void copyToDB(Story dayGankData) {
         if (realm != null) {
             realm.beginTransaction();
             realm.copyToRealm(dayGankData);
