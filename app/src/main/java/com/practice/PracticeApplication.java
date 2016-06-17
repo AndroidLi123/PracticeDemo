@@ -17,12 +17,12 @@ public class PracticeApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        super.onCreate();
         LeakCanary.install(this);
         sContext = getApplicationContext();
         RealmConfiguration config = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(config);
         SkinManager.getInstance().init(this);
+
     }
 
     public static Context getAppContext() {

@@ -131,7 +131,9 @@ public class SettingFragment extends PreferenceFragmentCompatDividers implements
 
     private void preferenceEqualsSwithModel(Object o) {
         Boolean isNightMode = Boolean.valueOf(o.toString());
-        SkinManager.getInstance().changeSkin(isNightMode?"night":"light");
+        SkinManager.getInstance().changeSkin(isNightMode ? "night" : "light");
+      /*  ((SkinnableActivity) getActivity()).setDayNightMode(isNightMode ? AppCompatDelegate.MODE_NIGHT_YES :
+                AppCompatDelegate.MODE_NIGHT_NO);*/
         EventBus.getDefault().post(new SwithModelEvent());
     }
 

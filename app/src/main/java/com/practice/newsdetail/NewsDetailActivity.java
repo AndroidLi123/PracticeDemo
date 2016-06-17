@@ -70,14 +70,14 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     }
 
     private void initUI() {
-        setToolbar(mToolbar);
+        setUpToolbar(mToolbar);
         mNestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        setWebView(wvNews);
+        setUpWebView(wvNews);
         //为可折叠toolbar设置标题
         mCollapsingToolbarLayout.setTitle(getString(R.string.hot_zhihu));
     }
 
-    private void setWebView(WebView wvNews) {
+    private void setUpWebView(WebView wvNews) {
         wvNews.setOverScrollMode(View.OVER_SCROLL_NEVER);
         wvNews.getSettings().setLoadsImagesAutomatically(true);
         //设置 缓存模式
@@ -86,7 +86,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
         wvNews.getSettings().setDomStorageEnabled(true);
     }
 
-    private void setToolbar(Toolbar mToolbar) {
+    private void setUpToolbar(Toolbar mToolbar) {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

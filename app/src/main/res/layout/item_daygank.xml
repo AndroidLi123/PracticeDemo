@@ -10,7 +10,7 @@
     app:cardCornerRadius="2dp">
 
     <RelativeLayout
-        android:background="@color/md_white_1000"
+        android:background="@color/item_main_background"
         android:tag="skin:item_main_background:background"
         android:padding="10dp"
         android:layout_width="match_parent"
@@ -32,6 +32,7 @@
             android:layout_margin="10dp"
             android:layout_toRightOf="@+id/img_meizhi"
             android:maxLines="2"
+            android:textColor="@color/item_text_color"
             android:tag="skin:item_text_color:textColor"
             />
 

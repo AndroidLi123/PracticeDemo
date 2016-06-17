@@ -18,7 +18,7 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
- * Created by thinkpad on 2016/4/29.
+ * Created by LiXiaoWang
  */
 public class TodayFragment extends BaseTodayNewsListFramgent implements TodayView, TodayItemAdapter.onImgCollectClickListener {
     private TodayPresenter dayGankPresenter;
