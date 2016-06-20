@@ -20,7 +20,7 @@ import com.practice.R;
 import com.practice.common.base.BaseActivity;
 import com.practice.common.util.HtmlUtil;
 import com.practice.common.util.ImageLoaderUtil;
-import com.practice.common.util.MyImageLoader;
+import com.practice.common.util.ImageLoader;
 import com.practice.common.data.News;
 import com.practice.module.newsdetail.model.NewsDetailModelImp;
 import com.practice.module.newsdetail.presenter.NewsDetailPresenter;
@@ -122,8 +122,8 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     }
 
     @NonNull
-    private MyImageLoader.Builder createBuilder(News news) {
-        MyImageLoader.Builder builder = new MyImageLoader.Builder();
+    private ImageLoader.Builder createBuilder(News news) {
+        ImageLoader.Builder builder = new ImageLoader.Builder();
         builder.imgView(ivHeader);
         builder.url(news.getImage());
         builder.diskCacheStrategy(DiskCacheStrategy.SOURCE);

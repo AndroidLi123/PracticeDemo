@@ -13,7 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.practice.R;
 import com.practice.common.util.ImageLoaderUtil;
-import com.practice.common.util.MyImageLoader;
+import com.practice.common.util.ImageLoader;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,8 +54,8 @@ public class PictureActivity extends AppCompatActivity {
     }
 
     @NonNull
-    private MyImageLoader.Builder createBuilder() {
-        MyImageLoader.Builder builder = new MyImageLoader.Builder();
+    private ImageLoader.Builder createBuilder() {
+        ImageLoader.Builder builder = new ImageLoader.Builder();
         builder.imgView(imgGirl);
         builder.url(imgurl);
         builder.diskCacheStrategy(DiskCacheStrategy.SOURCE);

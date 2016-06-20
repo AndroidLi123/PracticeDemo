@@ -20,7 +20,7 @@ import com.practice.R;
 import com.practice.common.base.BaseListAdapter;
 import com.practice.common.util.CycleInterpolator;
 import com.practice.common.util.ImageLoaderUtil;
-import com.practice.common.util.MyImageLoader;
+import com.practice.common.util.ImageLoader;
 import com.practice.common.data.Story;
 import com.practice.module.newsdetail.NewsDetailActivity;
 import com.zhy.changeskin.SkinManager;
@@ -99,8 +99,8 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
     }
 
     @NonNull
-    private MyImageLoader.Builder createBuilder(ViewHolder holder, String imgUrl) {
-        MyImageLoader.Builder builder = new MyImageLoader.Builder();
+    private ImageLoader.Builder createBuilder(ViewHolder holder, String imgUrl) {
+        ImageLoader.Builder builder = new ImageLoader.Builder();
         builder.imgView(holder.imgMeizhi);
         builder.url(imgUrl);
         builder.diskCacheStrategy(DiskCacheStrategy.SOURCE);

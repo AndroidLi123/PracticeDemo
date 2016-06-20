@@ -12,7 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.practice.R;
 import com.practice.common.base.BaseListAdapter;
 import com.practice.common.util.ImageLoaderUtil;
-import com.practice.common.util.MyImageLoader;
+import com.practice.common.util.ImageLoader;
 import com.practice.common.data.entitiy.Gank;
 
 import java.util.List;
@@ -60,8 +60,8 @@ public class GirlListAdapter extends BaseListAdapter<Gank, GirlListAdapter.ViewH
     }
 
     @NonNull
-    private MyImageLoader.Builder createBuilder(ViewHolder holder, Gank gank) {
-        MyImageLoader.Builder builder = new MyImageLoader.Builder();
+    private ImageLoader.Builder createBuilder(ViewHolder holder, Gank gank) {
+        ImageLoader.Builder builder = new ImageLoader.Builder();
         builder.imgView(holder.imgMeizhi);
         builder.url(gank.getUrl());
         builder.diskCacheStrategy(DiskCacheStrategy.SOURCE);

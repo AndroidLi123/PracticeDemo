@@ -19,7 +19,7 @@ import java.io.InputStream;
  */
 public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
     @Override
-    public void loadImage(Context ctx, MyImageLoader img) {
+    public void loadImage(Context ctx, ImageLoader img) {
         SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(ctx);
         boolean isWiFiChecked = shp.getBoolean(ctx.getString(R.string.onlywifi), false);
         if (isWiFiChecked) {
@@ -40,7 +40,7 @@ public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
     /**
      * load image with Glide
      */
-    private void loadNormal(Context ctx, MyImageLoader img) {
+    private void loadNormal(Context ctx, ImageLoader img) {
         Glide.with(ctx).load(img.getUrl()).placeholder(img.getPlaceHolder()).
                 diskCacheStrategy(img.getDiskCacheStrategy()).
                 into(img.getImgView());
@@ -50,7 +50,7 @@ public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
     /**
      * load cache image with Glide
      */
-    private void loadCache(Context ctx, MyImageLoader img) {
+    private void loadCache(Context ctx, ImageLoader img) {
         Glide.with(ctx).using(new StreamModelLoader<String>() {
             @Override
             public DataFetcher<InputStream> getResourceFetcher(final String model, int i, int i1) {
@@ -76,6 +76,9 @@ public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
                     }
                 };
             }
-        }).load(img.getUrl()).placeholder(img.getPlaceHolder()).diskCacheStrategy(DiskCacheStrategy.ALL).into(img.getImgView());
+        }).load(img.getUrl()).
+                placeholder(img.getPlaceHolder()).
+                diskCacheStrategy(DiskCacheStrategy.ALL).
+                into(img.getImgView());
     }
 }
