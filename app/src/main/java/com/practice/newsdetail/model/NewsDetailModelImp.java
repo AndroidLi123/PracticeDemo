@@ -21,7 +21,7 @@ public class NewsDetailModelImp implements NewsDetailModel {
 
     @Override
     public Observable<News> laodNewsDetail(long id) {
-        return new RetrofitNetwork().getGankAPIService().
+        return RetrofitNetwork.getInstance().getGankAPIService().
                 getNews(id).subscribeOn(Schedulers.io()).
                 observeOn((AndroidSchedulers.mainThread()));
     }

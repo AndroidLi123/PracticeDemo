@@ -56,20 +56,19 @@ public class GirlFragment extends BaseListFragment implements GirlView, GirlList
 
     @Override
     public void setupDataToView(GankData gankData) {
-        adapter.setmList(gankData.getResults());
+        getmBaseListAdapter().setmList(gankData.getResults());
 
     }
 
     @Override
     public void showProgress() {
-        refreshView.setRefreshing(true);
+        getmBaserefreshView().setRefreshing(true);
 
     }
 
     @Override
     public void hideProgress() {
-        refreshView.setRefreshing(false);
-
+        getmBaserefreshView().setRefreshing(false);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.practice.todaynews.view;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
 
 import com.practice.base.BaseTodayNewsListFramgent;
+import com.practice.common.itemanimator.ItemAnimatorFactory;
 import com.practice.data.Story;
 import com.practice.data.TodayNews;
 import com.practice.setting.SwithModelEvent;
@@ -39,11 +41,17 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
     }
 
     @Override
+    protected void setUpRecyclerView(RecyclerView recyclerView) {
+        super.setUpRecyclerView(recyclerView);
+        recyclerView.setItemAnimator(ItemAnimatorFactory.slidein());
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mMap.clear();
         RealmQuery<Story> query = realm.where(Story.class);
-        todayItemAdapter.setmMap(putElementToMap(query.findAll()));
+        ((TodayItemAdapter)getmBaseListAdapter()).setmMap(putElementToMap(query.findAll()));
     }
 
     private ArrayMap<Long, Boolean> putElementToMap(RealmResults<Story> results) {
@@ -63,18 +71,18 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
 
     @Override
     public void setupDayGankDataToView(TodayNews dayGankData) {
-        todayItemAdapter.setmList(dayGankData.getmStories());
+        ((TodayItemAdapter)getmBaseListAdapter()).setmList(dayGankData.getmStories());
 
     }
 
     @Override
     public void showProgress() {
-        refreshView.setRefreshing(true);
+        getmBaserefreshView().setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        refreshView.setRefreshing(false);
+        getmBaserefreshView().setRefreshing(false);
     }
 
     @Override
@@ -83,12 +91,6 @@ public class TodayFragment extends BaseTodayNewsListFramgent implements TodayVie
         if (realm != null)
             realm.close();
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    protected void setImgCollectListener(TodayItemAdapter adapter) {
-        adapter.setListener(this);
-
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -57,6 +58,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PracticeApplication.getAppContext().startActivity(intent);
+        Log.d("newsid",newsid+"");
     }
 
     @Override
@@ -84,6 +86,8 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
         wvNews.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         // 开启 DOM storage API 功能
         wvNews.getSettings().setDomStorageEnabled(true);
+        wvNews.getSettings().setSupportZoom(true);
+        wvNews.getSettings().setBuiltInZoomControls(true );
     }
 
     private void setUpToolbar(Toolbar mToolbar) {

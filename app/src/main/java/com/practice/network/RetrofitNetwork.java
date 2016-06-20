@@ -33,6 +33,11 @@ public class RetrofitNetwork {
 
     private final GankAPIService gankAPIService;
     private final Retrofit retrofit;
+    public static RetrofitNetwork retrofitNetwork = new RetrofitNetwork();
+    public static RetrofitNetwork getInstance() {
+        return retrofitNetwork;
+
+    }
     public RetrofitNetwork() {
         File httpCacheDirectory = new File(PracticeApplication.sContext.getCacheDir(), "responses");
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

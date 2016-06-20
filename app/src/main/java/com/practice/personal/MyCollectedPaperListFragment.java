@@ -1,9 +1,12 @@
 package com.practice.personal;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
 
 import com.practice.base.BaseTodayNewsListFramgent;
+import com.practice.base.BaseView;
+import com.practice.common.itemanimator.ItemAnimatorFactory;
 import com.practice.data.Story;
 import com.practice.todaynews.adapter.TodayItemAdapter;
 
@@ -14,7 +17,7 @@ import io.realm.RealmResults;
 /**
  * Created by LiXiaoWang
  */
-public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent implements TodayItemAdapter.onImgCollectClickListener {
+public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent implements BaseView,TodayItemAdapter.onImgCollectClickListener {
     private Realm realm;
     private RealmResults<Story> results;
     private ArrayMap<Long, Boolean> mMap = new ArrayMap<>();
@@ -26,17 +29,17 @@ public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent impl
         results = query.findAll();
     }
 
-
     @Override
-    protected void setImgCollectListener(TodayItemAdapter adapter) {
-        adapter.setListener(this);
+    protected void setUpRecyclerView(RecyclerView recyclerView) {
+        super.setUpRecyclerView(recyclerView);
+        recyclerView.setItemAnimator(ItemAnimatorFactory.slidein());
     }
 
     @Override
     protected void loadData() {
-        adapter.setmList(results);
-        todayItemAdapter.setmMap(putElementToMap(results, mMap));
-
+        ((TodayItemAdapter)getmBaseListAdapter()).setmMap(putElementToMap(results, mMap));
+        ((TodayItemAdapter)getmBaseListAdapter()).setmList(results);
+        hideProgress();
     }
 
     private ArrayMap<Long, Boolean> putElementToMap(RealmResults<Story> results, ArrayMap<Long, Boolean> mMap) {
@@ -60,6 +63,18 @@ public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent impl
         realm.beginTransaction();
         dayGankData.removeFromRealm();
         realm.commitTransaction();
-        adapter.notifyDataSetChanged();
+        getmBaseListAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void showProgress() {
+        getmBaserefreshView().setRefreshing(true);
+
+    }
+
+    @Override
+    public void hideProgress() {
+        getmBaserefreshView().setRefreshing(false);
+
     }
 }

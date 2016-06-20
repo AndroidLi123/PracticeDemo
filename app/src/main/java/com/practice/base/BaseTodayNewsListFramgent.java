@@ -1,36 +1,25 @@
 package com.practice.base;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArrayMap;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.practice.data.Story;
-import com.practice.common.itemanimator.ItemAnimatorFactory;
 import com.practice.todaynews.adapter.TodayItemAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by LiXiaoWang
  */
-public abstract class BaseTodayNewsListFramgent extends BaseListFragment {
-    private List<Story> dayGankDatas = new ArrayList<>();
-    protected TodayItemAdapter todayItemAdapter;
-    private boolean animated = true;
-    protected abstract void setImgCollectListener(TodayItemAdapter adapter);
-
+public abstract class BaseTodayNewsListFramgent extends BaseListFragment implements TodayItemAdapter.onImgCollectClickListener {
     @Override
     protected BaseListAdapter onCreateAdapter() {
-        todayItemAdapter = new TodayItemAdapter(dayGankDatas, getActivity(), animated);
-        setImgCollectListener(todayItemAdapter);
-        animated = false;
-        return todayItemAdapter;
-    }
-
-    @Override
-    protected void setItemAnimater(RecyclerView recyclerView) {
-        super.setItemAnimater(recyclerView);
-        recyclerView.setItemAnimator(ItemAnimatorFactory.slidein());
+        return new TodayItemAdapter(new ArrayList<Story>(), getActivity());
     }
 
     @Override
@@ -40,5 +29,15 @@ public abstract class BaseTodayNewsListFramgent extends BaseListFragment {
         return layoutManager;
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        ((TodayItemAdapter) getmBaseListAdapter()).setListener(this);
+        return view;
+    }
 
+    @Override
+    public void onImgClick(Story dayGankData, boolean isChecked, ArrayMap<Long, Boolean> mMap) {
+
+    }
 }

@@ -13,7 +13,7 @@ import rx.schedulers.Schedulers;
 public class GirlModelImp implements GirlModel{
     @Override
     public Observable<GankData> loadGirls() {
-        return new RetrofitNetwork().getGankAPIService().
+        return RetrofitNetwork.getInstance().getGankAPIService().
                 getGrils().subscribeOn(Schedulers.io()).
                 observeOn((AndroidSchedulers.mainThread()));
     }

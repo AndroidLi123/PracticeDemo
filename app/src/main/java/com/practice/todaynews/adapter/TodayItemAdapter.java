@@ -44,7 +44,7 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
         this.listener = listener;
     }
 
-    public TodayItemAdapter(List<Story> list, Context context, boolean animated) {
+    public TodayItemAdapter(List<Story> list, Context context) {
         super(list);
         this.context = context;
         setHasStableIds(true);

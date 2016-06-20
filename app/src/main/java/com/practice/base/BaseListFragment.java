@@ -9,25 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.practice.R;
-import com.zhy.changeskin.SkinManager;
 
 /**
  * Created by thinkpad on 2016/4/29.
  */
 public abstract class BaseListFragment extends BaseFragment {
-    protected SwipeRefreshLayout refreshView;
-    protected BaseListAdapter adapter;
-    protected RecyclerView recyclerView;
-
+    private BaseListAdapter mBaseListAdapter;
+    private SwipeRefreshLayout mBaserefreshView;
+    private RecyclerView mBaserecyclerView;
     protected abstract BaseListAdapter onCreateAdapter();
 
     protected abstract void loadData();
 
     protected abstract LayoutManager onCreateLayoutManager();
 
-    protected  void setItemAnimater(RecyclerView recyclerView) {
-
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,28 +31,44 @@ public abstract class BaseListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parentView = inflater.inflate(R.layout.layout_common_list, container, false);
-        SkinManager.getInstance().injectSkin(parentView);
-        SkinManager.getInstance().apply(getActivity());
-        recyclerView = (RecyclerView) parentView.findViewById(R.id.recyclerView);
-        refreshView = (SwipeRefreshLayout) parentView.findViewById(R.id.pull_to_refresh);
-        setItemAnimater(recyclerView);
-        adapter = onCreateAdapter();
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(onCreateLayoutManager());
+        mBaserecyclerView = (RecyclerView) parentView.findViewById(R.id.recyclerView);
+        mBaserefreshView = (SwipeRefreshLayout) parentView.findViewById(R.id.pull_to_refresh);
+        mBaseListAdapter = onCreateAdapter();
+        setUpRecyclerView( mBaserecyclerView);
+        setUpRefreshView(mBaserefreshView);
         loadData();
-        refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadData();
-
-            }
-        });
         return parentView;
     }
 
 
+    private void setUpRefreshView(SwipeRefreshLayout refreshView) {
+        refreshView.setRefreshing(true);
+        setOnRefreshListener(refreshView);
+    }
 
-    public BaseListAdapter getAdapter() {
-        return adapter;
+    private void setOnRefreshListener(SwipeRefreshLayout refreshView) {
+        refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
+    }
+
+    protected void setUpRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setAdapter(mBaseListAdapter);
+        recyclerView.setLayoutManager(onCreateLayoutManager());
+    }
+
+    public BaseListAdapter getmBaseListAdapter() {
+        return mBaseListAdapter;
+    }
+
+    public RecyclerView getmBaserecyclerView() {
+        return mBaserecyclerView;
+    }
+
+    public SwipeRefreshLayout getmBaserefreshView() {
+        return mBaserefreshView;
     }
 }

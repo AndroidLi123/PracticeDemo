@@ -109,8 +109,8 @@ public class MainActivity extends BaseActivity {
 
     private void addTab(View view, int drawable, String title) {
         view.findViewById(R.id.img_tab).setBackgroundResource(drawable);
-        TextView textView1 = ((TextView) view.findViewById(R.id.txt_tab));
-        textView1.setText(title);
+        TextView textView = ((TextView) view.findViewById(R.id.txt_tab));
+        textView.setText(title);
         tabLayout.addTab(tabLayout.newTab().setCustomView(view));
     }
 

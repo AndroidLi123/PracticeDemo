@@ -13,9 +13,10 @@ import rx.schedulers.Schedulers;
 public class TodayModelImp implements TodayModel {
     @Override
     public Observable<TodayNews> loadData() {
-        return new RetrofitNetwork().getGankAPIService().
+        return RetrofitNetwork.getInstance().getGankAPIService().
                 getTodayNews().subscribeOn(Schedulers.io()).
                 observeOn((AndroidSchedulers.mainThread()));
+
     }
 }
 
