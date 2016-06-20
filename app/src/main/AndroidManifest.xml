@@ -29,10 +29,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.practice.newsdetail.NewsDetailActivity"
+            android:name=".module.newsdetail.NewsDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.practice.girl.view.PictureActivity" />
-        <activity android:name="com.practice.personal.MyCollectedPaperActivity"
+        <activity android:name=".module.girl.view.PictureActivity" />
+        <activity android:name=".module.personal.MyCollectedPaperActivity"
             android:label="@string/my_collected"
             />
     </application>

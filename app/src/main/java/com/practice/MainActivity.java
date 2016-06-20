@@ -8,11 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.practice.base.BaseActivity;
-import com.practice.base.BaseNewTaskFragmentPagerAdapter;
-import com.practice.girl.view.GirlFragment;
-import com.practice.setting.SettingFragment;
-import com.practice.todaynews.view.TodayFragment;
+import com.practice.common.base.BaseActivity;
+import com.practice.common.base.BaseNewTaskFragmentPagerAdapter;
+import com.practice.module.girl.view.GirlFragment;
+import com.practice.module.setting.SettingFragment;
+import com.practice.module.todaynews.view.TodayFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
