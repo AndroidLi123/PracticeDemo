@@ -23,6 +23,7 @@ PracticeDemo is my  exercise project in my leisure time.
 - http://www.jianshu.com/p/e26130a93289
 - https://github.com/laucherish/PureZhihuD
 - http://gank.io/api
+- https://github.com/liuling07/SimpleNews
 
 
 
