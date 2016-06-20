@@ -20,9 +20,9 @@ PracticeDemo is my  exercise project in my leisure time.
 
 #Thanks
 
-http://www.jianshu.com/p/e26130a93289
-https://github.com/laucherish/PureZhihuD
-http://gank.io/api
+- http://www.jianshu.com/p/e26130a93289
+- https://github.com/laucherish/PureZhihuD
+- http://gank.io/api
 
 
 
