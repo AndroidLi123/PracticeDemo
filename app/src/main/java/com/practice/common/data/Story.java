@@ -9,6 +9,7 @@ import io.realm.RealmObject;
 
 public  class Story extends RealmObject implements Serializable {
     //id
+
     @SerializedName("id")
     private long mId;
 

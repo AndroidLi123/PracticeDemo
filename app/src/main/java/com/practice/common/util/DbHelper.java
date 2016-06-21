@@ -8,25 +8,45 @@ import io.realm.RealmResults;
 /**
  * Created by LiXiaoWang
  */
-public class DbHelper {
-    private static DbHelper ourInstance = new DbHelper();
-
-    public static DbHelper getInstance() {
-        return ourInstance;
+public class DbHelper<T extends RealmObject> {
+    private Realm realm;
+    private Class<T> typeParameterClass;
+    public Realm getRealm() {
+        return realm;
     }
 
-    public static RealmQuery<? extends RealmObject> query(Class<?extends RealmObject> mClass) {
-        Realm realm = Realm.getDefaultInstance();
-        return realm.where(mClass);
+    public DbHelper(Class<T> typeParameterClass)
+
+    {
+        realm = Realm.getDefaultInstance();
+        this.typeParameterClass = typeParameterClass;
 
     }
 
-    public RealmResults<? extends RealmObject> findAll(RealmQuery<? extends RealmObject> query) {
-        return query.findAll();
-    }
-    public static void write() {
+
+    public RealmQuery<T> query() {
+        return realm.where(typeParameterClass);
 
     }
-    private DbHelper() {
+
+    public RealmResults<T> findAll() {
+        return query().findAll();
     }
+
+    public void remove(RealmObject realmObject) {
+        realm.beginTransaction();
+        realmObject.removeFromRealm();
+        realm.commitTransaction();
+
+    }
+
+    public void copy(RealmObject realmObject) {
+        if (realm != null) {
+            realm.beginTransaction();
+            realm.copyToRealm(realmObject);
+            realm.commitTransaction();
+        }
+
+    }
+
 }

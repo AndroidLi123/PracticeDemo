@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,13 +11,14 @@ import android.view.WindowManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.practice.R;
-import com.practice.common.util.ImageLoaderUtil;
+import com.practice.common.base.BaseActivity;
 import com.practice.common.util.ImageLoader;
+import com.practice.common.util.ImageLoaderUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PictureActivity extends AppCompatActivity {
+public class PictureActivity extends BaseActivity{
     @Bind(R.id.img_girl)
     KenBurnsView imgGirl;
     private String imgurl;

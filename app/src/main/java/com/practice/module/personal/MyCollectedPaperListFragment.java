@@ -6,6 +6,7 @@ import android.util.ArrayMap;
 
 import com.practice.common.base.BaseTodayNewsListFramgent;
 import com.practice.common.base.BaseView;
+import com.practice.common.util.DbHelper;
 import com.practice.common.util.itemanimator.ItemAnimatorFactory;
 import com.practice.common.data.Story;
 import com.practice.module.todaynews.adapter.TodayItemAdapter;
@@ -17,16 +18,17 @@ import io.realm.RealmResults;
 /**
  * Created by LiXiaoWang
  */
-public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent implements BaseView,TodayItemAdapter.onImgCollectClickListener {
+public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent implements BaseView, TodayItemAdapter.onImgCollectClickListener {
     private Realm realm;
     private RealmResults<Story> results;
     private ArrayMap<Long, Boolean> mMap = new ArrayMap<>();
-
+    private DbHelper<Story>dbHelper;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         realm = Realm.getDefaultInstance();
         RealmQuery<Story> query = realm.where(Story.class);
         results = query.findAll();
+        dbHelper = new DbHelper<>(Story.class);
     }
 
     @Override
@@ -37,8 +39,8 @@ public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent impl
 
     @Override
     protected void loadData() {
-        ((TodayItemAdapter)getmBaseListAdapter()).setmMap(putElementToMap(results, mMap));
-        ((TodayItemAdapter)getmBaseListAdapter()).setmList(results);
+        ((TodayItemAdapter) getmBaseListAdapter()).setmMap(putElementToMap(results, mMap));
+        ((TodayItemAdapter) getmBaseListAdapter()).setmList(results);
         hideProgress();
     }
 
@@ -60,9 +62,7 @@ public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent impl
     }
 
     private void removeDataFromDB(Story dayGankData) {
-        realm.beginTransaction();
-        dayGankData.removeFromRealm();
-        realm.commitTransaction();
+        dbHelper.remove(dayGankData);
         getmBaseListAdapter().notifyDataSetChanged();
     }
 
@@ -75,6 +75,14 @@ public class MyCollectedPaperListFragment extends BaseTodayNewsListFramgent impl
     @Override
     public void hideProgress() {
         getmBaserefreshView().setRefreshing(false);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (dbHelper.getRealm() != null)
+            dbHelper.getRealm().close();
 
     }
 }
