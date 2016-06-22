@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.practice.R;
 
 /**
- * Created by thinkpad on 2016/4/29.
+ * Created by LiXiaoWang
  */
 public abstract class BaseListFragment extends BaseFragment {
     private BaseListAdapter mBaseListAdapter;

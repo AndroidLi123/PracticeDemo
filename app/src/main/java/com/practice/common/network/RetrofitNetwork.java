@@ -27,18 +27,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
- * Created by thinkpad on 2016/4/29.
+ * Created by LiXiaoWang
  */
 public class RetrofitNetwork {
-
     private final GankAPIService gankAPIService;
-    private final Retrofit retrofit;
-    public static RetrofitNetwork retrofitNetwork = new RetrofitNetwork();
+    private static RetrofitNetwork retrofitNetwork = new RetrofitNetwork();
     public static RetrofitNetwork getInstance() {
         return retrofitNetwork;
 
     }
-    public RetrofitNetwork() {
+
+    private RetrofitNetwork() {
         File httpCacheDirectory = new File(PracticeApplication.sContext.getCacheDir(), "responses");
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -81,7 +80,7 @@ public class RetrofitNetwork {
                 addInterceptor((cacheControlInterceptor)).addNetworkInterceptor(cacheControlInterceptor).
                 build();
 
-        retrofit = new Retrofit.Builder().baseUrl("http://news-at.zhihu.com/api/4/").
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://news-at.zhihu.com/api/4/").
                 addConverterFactory(GsonConverterFactory.create(gson)).
                 addCallAdapterFactory(RxJavaCallAdapterFactory.create()).
                 client(okHttpClient).
