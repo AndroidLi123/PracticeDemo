@@ -21,8 +21,8 @@ public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
     @Override
     public void loadImage(Context ctx, ImageLoader img) {
         SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(ctx);
-        boolean isWiFiChecked = shp.getBoolean(ctx.getString(R.string.onlywifi), false);
-        if (isWiFiChecked) {
+        boolean isOnlyWiFi = shp.getBoolean(ctx.getString(R.string.onlywifi), false);
+        if (isOnlyWiFi) {
             if (CommonUtils.getConnectedType(ctx) == CommonUtils.NETWORKTYPE_WIFI) {
                 loadNormal(ctx, img);
             } else {
