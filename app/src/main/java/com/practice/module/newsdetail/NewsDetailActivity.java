@@ -7,6 +7,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -18,15 +19,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.practice.PracticeApplication;
 import com.practice.R;
 import com.practice.common.base.BaseActivity;
-import com.practice.common.util.HtmlUtil;
-import com.practice.common.util.ImageLoaderUtil;
-import com.practice.common.util.ImageLoader;
 import com.practice.common.data.News;
+import com.practice.common.util.HtmlUtil;
+import com.practice.common.util.ImageLoader;
+import com.practice.common.util.ImageLoaderUtil;
+import com.practice.common.util.ScreenshotTaskAndShare;
+import com.practice.common.widget.MyLoadingView;
 import com.practice.module.newsdetail.model.NewsDetailModelImp;
 import com.practice.module.newsdetail.presenter.NewsDetailPresenter;
 import com.practice.module.newsdetail.presenter.NewsDetailPresenterImp;
 import com.practice.module.newsdetail.view.NewsDetailView;
-import com.practice.common.widget.MyLoadingView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -82,7 +84,8 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
         wvNews.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         wvNews.getSettings().setDomStorageEnabled(true);
         wvNews.getSettings().setSupportZoom(true);
-        wvNews.getSettings().setBuiltInZoomControls(true );
+        wvNews.getSettings().setBuiltInZoomControls(true);
+
     }
 
     private void setUpToolbar(Toolbar mToolbar) {
@@ -136,7 +139,23 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.id_share:
+                shareNewsDetail();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void shareNewsDetail() {
+        ScreenshotTaskAndShare screenshotTaskAndShare = new ScreenshotTaskAndShare(this,wvNews);
+        screenshotTaskAndShare.execute();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_newsdetail, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 }
