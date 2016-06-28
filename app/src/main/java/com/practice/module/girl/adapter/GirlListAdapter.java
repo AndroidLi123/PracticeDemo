@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.practice.R;
 import com.practice.common.base.BaseListAdapter;
-import com.practice.common.util.ImageLoaderUtil;
-import com.practice.common.util.ImageLoader;
 import com.practice.common.data.entitiy.Gank;
+import com.practice.common.util.ImageLoader;
+import com.practice.common.util.ImageLoaderUtil;
 
 import java.util.List;
 
@@ -42,7 +42,6 @@ public class GirlListAdapter extends BaseListAdapter<Gank, GirlListAdapter.ViewH
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_girl, parent, false);
         ViewHolder holder = new ViewHolder(view);
-        view.setTag(holder);
         return holder;
     }
 

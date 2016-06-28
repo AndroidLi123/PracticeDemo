@@ -17,6 +17,7 @@ public abstract class BaseListFragment extends BaseFragment {
     private BaseListAdapter mBaseListAdapter;
     private SwipeRefreshLayout mBaserefreshView;
     private RecyclerView mBaserecyclerView;
+    private LayoutManager mBaselayoutmanager;
     protected abstract BaseListAdapter onCreateAdapter();
 
     protected abstract void loadData();
@@ -34,6 +35,7 @@ public abstract class BaseListFragment extends BaseFragment {
         mBaserecyclerView = (RecyclerView) parentView.findViewById(R.id.recyclerView);
         mBaserefreshView = (SwipeRefreshLayout) parentView.findViewById(R.id.pull_to_refresh);
         mBaseListAdapter = onCreateAdapter();
+        mBaselayoutmanager = onCreateLayoutManager();
         setUpRecyclerView( mBaserecyclerView);
         setUpRefreshView(mBaserefreshView);
         loadData();
@@ -57,7 +59,7 @@ public abstract class BaseListFragment extends BaseFragment {
 
     protected void setUpRecyclerView(RecyclerView recyclerView) {
         recyclerView.setAdapter(mBaseListAdapter);
-        recyclerView.setLayoutManager(onCreateLayoutManager());
+        recyclerView.setLayoutManager(mBaselayoutmanager);
     }
 
     public BaseListAdapter getmBaseListAdapter() {
@@ -70,5 +72,9 @@ public abstract class BaseListFragment extends BaseFragment {
 
     public SwipeRefreshLayout getmBaserefreshView() {
         return mBaserefreshView;
+    }
+
+    public LayoutManager getmBaselayoutmanager() {
+        return mBaselayoutmanager;
     }
 }

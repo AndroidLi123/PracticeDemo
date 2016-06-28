@@ -9,6 +9,8 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.target.Target;
 import com.practice.R;
 
 import java.io.IOException;
@@ -19,18 +21,18 @@ import java.io.InputStream;
  */
 public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
     @Override
-    public void loadImage(Context ctx, ImageLoader img) {
+    public Target<GlideDrawable> loadImage(Context ctx, ImageLoader img) {
         SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(ctx);
         boolean isOnlyWiFi = shp.getBoolean(ctx.getString(R.string.onlywifi), false);
         if (isOnlyWiFi) {
             if (CommonUtils.getConnectedType(ctx) == CommonUtils.NETWORKTYPE_WIFI) {
-                loadNormal(ctx, img);
+                 return loadNormal(ctx, img);
             } else {
-                loadCache(ctx, img);
+                 return loadCache(ctx, img);
             }
 
         }else {
-            loadNormal(ctx,img);
+            return loadNormal(ctx,img);
         }
 
 
@@ -40,8 +42,8 @@ public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
     /**
      * load image with Glide
      */
-    private void loadNormal(Context ctx, ImageLoader img) {
-        Glide.with(ctx).load(img.getUrl()).placeholder(img.getPlaceHolder()).
+    private Target<GlideDrawable> loadNormal(Context ctx, ImageLoader img) {
+        return Glide.with(ctx).load(img.getUrl()).placeholder(img.getPlaceHolder()).
                 diskCacheStrategy(img.getDiskCacheStrategy()).
                 into(img.getImgView());
     }
@@ -50,8 +52,8 @@ public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
     /**
      * load cache image with Glide
      */
-    private void loadCache(Context ctx, ImageLoader img) {
-        Glide.with(ctx).using(new StreamModelLoader<String>() {
+    private Target<GlideDrawable> loadCache(Context ctx, ImageLoader img) {
+        return Glide.with(ctx).using(new StreamModelLoader<String>() {
             @Override
             public DataFetcher<InputStream> getResourceFetcher(final String model, int i, int i1) {
                 return new DataFetcher<InputStream>() {

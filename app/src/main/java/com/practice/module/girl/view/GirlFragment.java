@@ -33,14 +33,22 @@ public class GirlFragment extends BaseListFragment implements GirlView, GirlList
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       View view =  super.onCreateView(inflater, container, savedInstanceState);
-        ((GirlListAdapter)getmBaseListAdapter()).setOnItemClickListener(this);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        ((GirlListAdapter) getmBaseListAdapter()).setOnItemClickListener(this);
+        getmBaserecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                ((StaggeredGridLayoutManager) getmBaselayoutmanager()).invalidateSpanAssignments();
+
+            }
+        });
         return view;
     }
 
     @Override
     protected BaseListAdapter onCreateAdapter() {
-        return new GirlListAdapter(new ArrayList<Gank>(),mBaseActivity);
+        return new GirlListAdapter(new ArrayList<Gank>(), mBaseActivity);
     }
 
     @Override
@@ -54,6 +62,7 @@ public class GirlFragment extends BaseListFragment implements GirlView, GirlList
         final StaggeredGridLayoutManager layoutManager
                 = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         return layoutManager;
     }
 
@@ -76,7 +85,7 @@ public class GirlFragment extends BaseListFragment implements GirlView, GirlList
 
     @Override
     public void onItemClick(ImageView imageView, String imgUrl) {
-        PictureActivity.start(mBaseActivity,imgUrl);
+        PictureActivity.start(mBaseActivity, imgUrl);
     }
 
 }

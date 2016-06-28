@@ -2,6 +2,9 @@ package com.practice.common.util;
 
 import android.content.Context;
 
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.target.Target;
+
 /**
  * Created by LiXiaoWang
  */
@@ -17,8 +20,8 @@ public class ImageLoaderUtil {
         mProvider =new GlideImageLoaderProvider();
     }
 
-    public void loadImage(Context context,ImageLoader img){
-        mProvider.loadImage(context,img);
+    public Target<GlideDrawable> loadImage(Context context, ImageLoader img){
+        return mProvider.loadImage(context,img);
     }
 
 }
