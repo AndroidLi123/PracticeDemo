@@ -4,11 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".module.girl.view.PictureActivity">
+
     <com.flaviofaria.kenburnsview.KenBurnsView
         android:id="@+id/img_girl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:scaleType="centerCrop" />
+
+
+    <ImageView
+        android:id="@+id/img_download"
+        android:layout_width="@dimen/download_width"
+        android:layout_height="@dimen/download_height"
+        android:layout_above="@+id/img_wallpaper"
+        android:layout_alignLeft="@+id/img_wallpaper"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/download" />
+
+    <ImageView
+        android:id="@+id/img_wallpaper"
+        android:layout_width="@dimen/wallpager_width"
+        android:layout_height="@dimen/wallpager_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/wallpaper" />
 
 </RelativeLayout>

@@ -27,4 +27,6 @@
         <item name="tabPaddingStart">6dp</item>
         <item name="tabPaddingEnd">6dp</item>
     </style>
+
+
 </resources>

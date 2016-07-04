@@ -3,4 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="layout_height_48dp">48dp</dimen>
+    <dimen name="wallpager_width">35dp</dimen>
+    <dimen name="wallpager_height">35dp</dimen>
+    <dimen name="download_width">35dp</dimen>
+    <dimen name="download_height">35dp</dimen>
 </resources>

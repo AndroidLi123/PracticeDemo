@@ -2,6 +2,7 @@ package com.practice.common.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.support.v7.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
@@ -26,15 +27,27 @@ public class GlideImageLoaderProvider extends BaseImageLoaderProvider {
         boolean isOnlyWiFi = shp.getBoolean(ctx.getString(R.string.onlywifi), false);
         if (isOnlyWiFi) {
             if (CommonUtils.getConnectedType(ctx) == CommonUtils.NETWORKTYPE_WIFI) {
-                 return loadNormal(ctx, img);
+                return loadNormal(ctx, img);
             } else {
-                 return loadCache(ctx, img);
+                return loadCache(ctx, img);
             }
 
-        }else {
-            return loadNormal(ctx,img);
+        } else {
+            return loadNormal(ctx, img);
         }
 
+
+    }
+
+    @Override
+    public void saveImage(final Context ctx, final ImageLoader img, final Bitmap bitmap) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                CommonUtils.saveImage(CommonUtils.getBitMap(img.getUrl()), ctx);
+
+            }
+        }).start();
 
     }
 

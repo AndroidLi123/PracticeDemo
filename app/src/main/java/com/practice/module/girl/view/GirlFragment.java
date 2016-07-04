@@ -35,15 +35,19 @@ public class GirlFragment extends BaseListFragment implements GirlView, GirlList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         ((GirlListAdapter) getmBaseListAdapter()).setOnItemClickListener(this);
+        addOnScrollListener();
+        return view;
+    }
+
+    private void addOnScrollListener() {
         getmBaserecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
                 ((StaggeredGridLayoutManager) getmBaselayoutmanager()).invalidateSpanAssignments();
+                super.onScrollStateChanged(recyclerView, newState);
 
             }
         });
-        return view;
     }
 
     @Override
