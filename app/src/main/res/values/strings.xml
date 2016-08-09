@@ -12,4 +12,7 @@
     <string name="share">分享</string>
     <string name="download">下载图片</string>
     <string name="setwallpaper">设为壁纸</string>
+    <string name="scale_up_show_behavior">com.practice.common.widget.ScaleUpShowBehavior</string>
+
+
 </resources>
