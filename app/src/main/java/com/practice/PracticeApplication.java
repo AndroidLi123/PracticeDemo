@@ -23,7 +23,6 @@ public class PracticeApplication extends Application{
         Realm.setDefaultConfiguration(config);
         SkinManager.getInstance().init(this);
 
-
     }
 
     public static Context getAppContext() {
