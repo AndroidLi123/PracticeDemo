@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
@@ -20,15 +21,11 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="96dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="exitUntilCollapsed|scroll">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.8"
-                app:layout_scrollFlags="scroll|snap|enterAlways|enterAlwaysCollapsed">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/iv_header"
@@ -36,6 +33,7 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
+                    android:visibility="gone"
                     app:layout_collapseMode="parallax" />
 
                 <View
@@ -85,14 +83,14 @@
         app:secondColor="#0362DB"
         app:splitSize="20"
         app:type="0" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:src="@drawable/up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:layout_behavior="@string/scale_up_show_behavior"
+        android:src="@drawable/up"
         app:layout_scrollFlags="scroll|enterAlways|snap" />
 
 </android.support.design.widget.CoordinatorLayout>

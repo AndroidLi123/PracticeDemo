@@ -7,7 +7,7 @@ import com.practice.module.todaynews.view.TodayView;
 import rx.Subscriber;
 
 /**
- * Created by thinkpad on 2016/4/29.
+ * Created by LiXiaoWang
  */
 public class TodayPresenterImp implements TodayPresenter {
     private TodayModel todayModel;

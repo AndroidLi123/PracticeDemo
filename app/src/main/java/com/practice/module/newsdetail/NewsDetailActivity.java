@@ -3,16 +3,12 @@ package com.practice.module.newsdetail;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,11 +33,7 @@ import com.practice.module.newsdetail.presenter.NewsDetailPresenter;
 import com.practice.module.newsdetail.presenter.NewsDetailPresenterImp;
 import com.practice.module.newsdetail.view.NewsDetailView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
@@ -62,10 +54,12 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     @Bind(R.id.fab)
     FloatingActionButton FAB;
+    @Bind(R.id.appbar)
+    AppBarLayout appbar;
     private NewsDetailPresenter newsDetailPresenter;
     public static final String NEWS_ID = "newsid";
-    private boolean isInitializeFAB = false;
-    private  BottomSheetDialog mBottomSheetDialog;
+    private float percentage;
+    private float appbarHeight = 0;
 
     public static void start(Long newsid) {
         Intent intent = new Intent(PracticeApplication.getAppContext(), NewsDetailActivity.class);
@@ -80,18 +74,16 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (!isInitializeFAB) {
-            isInitializeFAB = true;
-            hideFAB();
-        }
+    }
 
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_news_detail;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_detail);
-        ButterKnife.bind(this);
         initUI();
         newsDetailPresenter = new NewsDetailPresenterImp(new NewsDetailModelImp(this), this);
         loadNewsDetail((Long) getIntent().getExtras().get(NEWS_ID));
@@ -102,46 +94,21 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
         mNestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         setUpWebView(wvNews);
         mCollapsingToolbarLayout.setTitle(getString(R.string.hot_zhihu));
+        FAB.setVisibility(View.GONE);
         mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-            }
-        });
-       // createBottomSheetDialog();
-    }
-
-    private void createBottomSheetDialog() {
-        mBottomSheetDialog = new BottomSheetDialog(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_bottom_sheet, null, false);
-        mBottomSheetDialog.setContentView(view);
-        View view1 = mBottomSheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet);
-        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(view1);
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    mBottomSheetDialog.dismiss();
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                if ((scrollY + mNestedScrollView.computeVerticalScrollExtent()) /
+                        (float) mNestedScrollView.computeVerticalScrollRange() > 0.5) {
+                    FAB.show();
+                } else {
+                    FAB.hide();
                 }
-            }
 
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
             }
         });
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add("我是第" + i + "个");
-        }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setSmoothScrollbarEnabled(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
 
-        ListRecyclerAdapter adapter = new ListRecyclerAdapter(list);
-        recyclerView.setAdapter(adapter);
+
     }
 
     private void setUpWebView(WebView wvNews) {
@@ -213,7 +180,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     }
 
     private void shareNewsDetail() {
-        ScreenshotTaskAndShare screenshotTaskAndShare = new ScreenshotTaskAndShare(this, wvNews);
+        ScreenshotTaskAndShare screenshotTaskAndShare = new ScreenshotTaskAndShare(this, wvNews, mNestedScrollView);
         screenshotTaskAndShare.execute();
     }
 
@@ -226,12 +193,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     @OnClick(R.id.fab)
     void clickOnFab() {
         mNestedScrollView.fullScroll(ScrollView.FOCUS_UP);
-       /* if (!mBottomSheetDialog.isShowing())
-            mBottomSheetDialog.show();*/
 
     }
 
-    private void hideFAB() {
-        FAB.setVisibility(View.GONE);
-    }
 }

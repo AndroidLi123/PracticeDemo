@@ -25,7 +25,6 @@ public class AnimatorUtil {
                 .scaleY(0.0f)
                 .alpha(0.0f)
                 .setDuration(200)
-
                 .setListener(viewPropertyAnimatorListener)
                 .start();
     }

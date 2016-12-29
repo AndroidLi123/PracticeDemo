@@ -4,11 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.v4.widget.NestedScrollView;
 import android.webkit.WebView;
 
-/**
- * Created by LiXiaoWang
- */
 public class ScreenshotTaskAndShare extends AsyncTask<Void, Void, Boolean> {
     private Context context;
     private ProgressDialog dialog;
@@ -16,13 +14,15 @@ public class ScreenshotTaskAndShare extends AsyncTask<Void, Void, Boolean> {
     private int windowWidth;
     private float contentHeight;
     private Bitmap bitmap;
-
-    public ScreenshotTaskAndShare(Context context, WebView webView) {
+    private NestedScrollView scrollView;
+    public ScreenshotTaskAndShare(Context context, WebView webView, NestedScrollView scrollView) {
         this.context = context;
         this.dialog = null;
         this.webView = webView;
         this.windowWidth = 0;
         this.contentHeight = 0f;
+        this.scrollView = scrollView;
+
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ScreenshotTaskAndShare extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        bitmap = ViewUnit.capture(webView, windowWidth, contentHeight, false, Bitmap.Config.ARGB_8888);
+        bitmap = CommonUtils.getBitmapByView(scrollView);
         return bitmap != null;
     }
 

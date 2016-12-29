@@ -15,7 +15,6 @@ import com.practice.module.setting.SettingFragment;
 import com.practice.module.todaynews.view.TodayFragment;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
     @Bind(R.id.vp_horizontal_ntb)
@@ -26,10 +25,13 @@ public class MainActivity extends BaseActivity {
     TabLayout tabLayout;
 
     @Override
+    protected int setLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         tabLayout.setupWithViewPager(initViewPager(viewPager));
         addTabToTabLayout();
@@ -114,12 +116,5 @@ public class MainActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab().setCustomView(view));
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        System.runFinalization();
-        Runtime.getRuntime().gc();
-        System.gc();
-    }
 
 }

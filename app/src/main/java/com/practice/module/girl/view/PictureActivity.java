@@ -22,7 +22,6 @@ import com.practice.common.util.ImageLoaderUtil;
 import java.io.IOException;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnLongClick;
 
 public class PictureActivity extends BaseActivity {
@@ -39,11 +38,14 @@ public class PictureActivity extends BaseActivity {
     }
 
     @Override
+    protected int setLayoutId() {
+        return R.layout.activity_picture;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_picture);
-        ButterKnife.bind(this);
         imgurl = getIntent().getStringExtra(IMG_URL);
         ImageLoaderUtil.getInstance().loadImage(this, createImageLoader());
         onImgGirlClick();
@@ -54,8 +56,7 @@ public class PictureActivity extends BaseActivity {
         imgGirl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                finish();
             }
         });
     }

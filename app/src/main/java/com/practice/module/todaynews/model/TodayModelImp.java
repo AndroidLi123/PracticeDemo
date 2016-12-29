@@ -8,7 +8,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by thinkpad on 2016/4/29.
+ * Created by LiXiaoWang
  */
 public class TodayModelImp implements TodayModel {
     @Override

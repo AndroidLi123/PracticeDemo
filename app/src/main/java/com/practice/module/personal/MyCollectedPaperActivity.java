@@ -8,17 +8,19 @@ import com.practice.R;
 import com.practice.common.base.BaseActivity;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class MyCollectedPaperActivity extends BaseActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
     @Override
+    protected int setLayoutId() {
+        return R.layout.activity_my_collected_paper;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_collected_paper);
-        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

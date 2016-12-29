@@ -14,6 +14,9 @@ import android.view.View;
 
 import com.practice.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 /**
  * Created by LiXiaoWang
  */
@@ -32,13 +35,28 @@ public class ViewUnit {
     }
 
     public static Bitmap capture(View view, float width, float height, boolean scroll, Bitmap.Config config) {
+        ByteArrayOutputStream baos = null;
+        Bitmap bitmap = null;
         if (!view.isDrawingCacheEnabled()) {
             view.setDrawingCacheEnabled(true);
         }
 
-        Bitmap bitmap = Bitmap.createBitmap((int) width, (int) height, config);
-        bitmap.eraseColor(Color.WHITE);
+        try {
+            baos = new ByteArrayOutputStream();
+            bitmap = Bitmap.createBitmap((int) width, (int) height, config);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
 
+        } finally {
+            try {
+                if (baos != null)
+                    baos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        bitmap.eraseColor(Color.WHITE);
         Canvas canvas = new Canvas(bitmap);
         int left = view.getLeft();
         int top = view.getTop();

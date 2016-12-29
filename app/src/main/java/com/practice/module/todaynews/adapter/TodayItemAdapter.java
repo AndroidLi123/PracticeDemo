@@ -109,7 +109,7 @@ public class TodayItemAdapter extends BaseListAdapter<Story, TodayItemAdapter.Vi
 
     private void setOnItemViewClickListener(final ViewHolder holder, final long newsid) {
         RxView.clicks(holder.itemView)
-                .throttleFirst(1000, TimeUnit.MILLISECONDS) // 设置防抖间隔为 500ms
+                .throttleFirst(1000, TimeUnit.MILLISECONDS) // 设置防抖间隔为 1000ms
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
